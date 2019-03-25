@@ -1,0 +1,108 @@
+{
+    "api":[
+        {
+            "id":"js",
+            "name":"LT极速PK10",
+            "url":"http://154.92.177.252/api/",
+            "dir":"pk10-js",
+            "code":"10",
+            "str_positon": "定位：冠|定位：亚|定位：三|定位：四|定位：五|定位：六|定位：七|定位：八|定位：九|定位：十",
+            "maxPeriod":1440,
+            "intervalPeriod":60,
+            "delayPeriod":10
+        },
+        {
+            "id":"xy",
+            "name":"幸运极速PK10",
+            "url":"http://154.92.177.252/api/",
+            "dir":"pk10-js-xy",
+            "code":"10",
+            "str_positon": "定位：冠|定位：亚|定位：三|定位：四|定位：五|定位：六|定位：七|定位：八|定位：九|定位：十",
+            "maxPeriod":1440,
+            "intervalPeriod":60,
+            "delayPeriod":10
+        },
+        {
+            "id":"xyft",
+            "name":"幸运飞艇",
+            "url":"http://154.92.177.252/api/",
+            "dir":"lucky-air-ship",
+            "code":"10",
+            "str_positon": "定位：冠|定位：亚|定位：三|定位：四|定位：五|定位：六|定位：七|定位：八|定位：九|定位：十",
+            "maxPeriod":288,
+            "intervalPeriod":300,
+            "delayPeriod":60
+        },
+        {
+            "id":"ffssc",
+            "name":"分分时时彩",
+            "url":"http://154.92.177.252/api/",
+            "dir":"ffssc",
+            "code":"5",
+            "str_positon": "定位：万|定位：千|定位：百|定位：十|定位：个|和值特码|大小：万|大小：千|大小：百|大小：十|大小：个|和值大小|单双：万|单双：千|单双：百|单双：十|单双：个|和值单双|五星定胆|后三组三|后三组六",
+            "str_numbers_show": "1|1|1|1|1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|1|1",
+            "maxPeriod":1440,
+            "intervalPeriod":60,
+            "delayPeriod":10
+        },
+        {
+            "id":"xy28",
+            "name":"幸运28(PC蛋蛋)",
+            "url":"http://154.92.177.252/api/",
+            "dir":"pc28",
+            "code":"3",
+            "str_positon": "定位：一|定位：二|定位：三|和值特码|和值大小|和值单双|大小单双|和值色波",
+            "str_numbers_show": "1|1|1|0|0|0|0|0",
+            "maxPeriod":179,
+            "intervalPeriod":300,
+            "delayPeriod":120
+        }
+    ],
+    "planqi":2,
+    "positon": 0,
+    "numbers": 1,
+    "historylimit":10,
+    "leaderboardlimit":30,
+    "textDate":{
+                "qq": [
+                    {
+                        "id": "1982201041",
+                        "img": "qq_1982201041.jpg",
+                        "url": "http://wpa.qq.com/msgrd?v=3&uin=1982201041&site=qq&menu=yes"
+                    }
+                ],
+                "qqq": [
+                    {
+                        "id": "972740518",
+                        "img": "qqq_972740518.jpg",
+                        "url": "https://qm.qq.com/cgi-bin/qm/qr?k=Il3qzaAgUtL1Zh95oUyExWrrHpV6h6BZ&auth=fde3036de9ff6717e42595058cd7005757a3bd4829409a3c2349a130ebc5eabbb61f5352e5cad408"
+                    }
+                ],
+                "wechat": [
+                    {
+                        "id": "1157733159",
+                        "img": "wx_1157733159.jpg",
+                        "url": "weixin://"
+                    },
+                    {
+                        "id": "a1033211581",
+                        "img": "wx_a1033211581.jpg",
+                        "url": "weixin://"
+                    },
+                    {
+                        "id": "bbtt985",
+                        "img": "wx_bbtt985.jpg",
+                        "url": "weixin://"
+                    },
+                    {
+                        "id": "mm151815",
+                        "img": "wx_mm151815.jpg",
+                        "url": "weixin://"
+                    }
+                ],
+                "affurl": "https://www.ezun110.com/register.html",
+                "chaturl": "http://ezun.yabomg.com",
+                "baidu":"5aae175363290255b62c0f8e066ef1cb",
+                "name":"贝尔"
+            }
+}

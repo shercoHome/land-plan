@@ -1,4 +1,4 @@
-# landing-plan
+# landing-page-all
 
 ## Project setup
 ```

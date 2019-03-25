@@ -1,17 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>landing-plan</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but landing-plan doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>app_icon.png">
+  <!-- Specifying a Webpage Icon for Web Clip for Safari -->
+  <link rel="apple-touch-icon" href="<%= BASE_URL %>app_icon.png">
+  <!-- Specifying a Launch Screen Image for Safari -->
+  <link rel="apple-touch-startup-image" href="<%= BASE_URL %>app_start.png">
+  <!-- Hiding Safari User Interface Components -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Changing the Status Bar Appearance -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>彩票计划加载中……</title>
+  <style media="screen" type="text/css">
+  body,html{
+    padding: 0;
+    margin: 0;
+  }
+    #appLoading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color:#fff;
+      z-index: 1;
+      float: left;
+
+    }
+
+    #appLoading img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      height:100vh;
+      width:100vw;
+      max-width: 600px;
+
+      -webkit-transform: translateY(-50%) translateX(-50%);
+      transform: translateY(-50%) translateX(-50%);
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div id="appLoading">
+    <img src="loading.png" alt="loading" />
+  </div>
+  <noscript>
+    <strong>We're sorry but vue-pk10-kj doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
 </html>
