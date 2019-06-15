@@ -89,7 +89,7 @@
       <li>5.	获得收益提现到账。</li>
       </ul>
   </article>
-<a @click="fn_to_agent">添加管理员后，点击这里，立即加入</a>
+<!-- <a @click="fn_to_agent">本站QQ与微信是成为代理的唯一方式</a> -->
 
 
    
@@ -109,7 +109,7 @@ export default {
   },
   methods: {
     fn_to_agent() {
-      this.$emit("child-event-fn-to-agent");
+     // this.$emit("child-event-fn-to-agent");
     },
     fn_show_page(v) {
       console.log("home-fn_show_page:" + v);
