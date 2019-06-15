@@ -32,7 +32,7 @@
         </a>
       </li>
       <li 
-      v-if="txtData.chaturl!=='null'">
+      v-if="txtData.chaturl!=='isNull'">
         <a :href="txtData.chaturl" target="_blank">
           <span class="icon icon_qqq"></span>
           <span>{{txtData.chatname}}</span>

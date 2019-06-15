@@ -1,1 +1,1 @@
-http://154.92.177.252/sqlapi/
+http://duke.com/tools/sqlapi/

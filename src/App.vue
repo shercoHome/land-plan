@@ -346,6 +346,8 @@ export default {
               ? "荣誉授权"
               : infoJson.authorizationStatus == "1"
               ? "已"
+              : infoJson.authorizationStatus == "2"
+              ? "待处理"
               : "未";
           localStorage.userInfo = JSON.stringify(infoJson);
           that.userCenter["info"] = infoJson;

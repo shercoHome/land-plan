@@ -630,7 +630,15 @@ export default {
     that.fn_get_plan_api().then(function(e) {
       console.log(">>> fn_get_plan_api >>> " + e);
       console.log(e);
-      that.api = e.data.data;
+      const oldAPI=e.data.data;
+      let tempAPI=[];
+      oldAPI.forEach(element => {
+         if(element.switch=="1"){tempAPI.push(element);}
+      });
+
+      that.api =tempAPI;
+
+      that.$$.sortBy(that.api,'mark1',1);
 
       that.plan.planqi = that.api[that.apiSelect].defaultPlanQi;
       that.plan.positon = that.api[that.apiSelect].defaultPlanPosition;

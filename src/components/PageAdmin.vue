@@ -29,7 +29,89 @@
         </a>
         <a class="btn half" @click="fn_get_web_set_by_id()">[ 获取 / 刷新 ] 网站配置</a>
       </div>
-      <dl id="myWebSet" class="myWebSet">
+
+
+<table class="list-table">
+          <tr>
+            <th>No.</th>
+            <th @click="fn_sort_by('myWebSet','userName')">站长(代理)账号</th>
+            <th @click="fn_sort_by('myWebSet','userID')">代理ID</th>
+            <th @click="fn_sort_by('myWebSet','siteLink')">专属网址</th>
+            <th @click="fn_sort_by('myWebSet','siteName')">网站名称</th>
+            <th @click="fn_sort_by('myWebSet','id')">网站ID</th>
+          </tr>
+          <template v-for="(myWebSetItem, n) in myWebSet">
+            <tr :key="n"  @click="webSetShow=webSetShow==n?-1:n" class="underline">
+              <td>{{n+1}}</td>
+              <td>{{myWebSetItem['userName']}}</td>
+              <td>{{myWebSetItem['userID']}}</td>
+              <td>{{myWebSetItem['siteLink']}}</td>
+              <td>{{myWebSetItem['siteName']}}</td>
+              <td>{{myWebSetItem['id']}}</td>
+            </tr>
+            <tr v-show="webSetShow==n" :key="n+'_'+index" v-for="(value, key, index) in myWebSetItem">
+              <td colspan="6">
+                <p id="v-for-object" class="demo">
+                  <span>{{ index }}. {{ $chinese.webSetting[key] }}</span>：
+                  <label
+                    v-if="key!='csQQ' && key!='csQQGroup' && key!='csWechat' && key!='csEmail'"
+                  >{{value}}</label>
+
+                  <template v-else>
+                    <input
+                      type="button"
+                      class="btn shareRequired middle"
+                      @click="fn_cs_fj(value,key)"
+                      value="查看/隐藏"
+                    >
+
+                    <div
+                      v-show="key==temps.key"
+                      v-for="(temp,iii) in temps.arr"
+                      :key="iii"
+                      style="border-bottom:#ccc 1px solid;padding-bottom:8px;"
+                    >
+                      <p>账号：
+                        <input v-model="temps.arr[iii][0]">
+                      </p>
+                      <p>图片：
+                        <input v-model="temps.arr[iii][1]">，支持网络图片（或联系管理员上传）
+                      </p>
+                      <p v-if="key!='csQQ'">链接：
+                        <input v-model="temps.arr[iii][2]">
+                      </p>
+                    </div>请先
+                    <input
+                      type="button"
+                      class="btn shareRequired middle"
+                      @click="fn_cs_get(key)"
+                      value="复制信息"
+                    >，再粘贴到
+                  </template>
+                  <a
+                    v-if="key=='siteLink'"
+                    class="btn shareRequired middle"
+                    @click="fn_copy('http://'+value)"
+                  >复制链接</a>
+                  <a
+                    v-if="myWebSetLimit[key]==1"
+                    class="btn shareRequired short"
+                    @click="fn_new('webSetting|'+key+'|'+myWebSetItem['userID'])"
+                  >修改</a>
+                  <a
+                    v-if="myWebSetLimit[key]==2"
+                    class="btn shareRequired middle"
+                    @click="fn_submit_new('webSetting|'+key+'|'+myWebSetItem['userID'])"
+                  >申请修改</a>
+                </p>
+              </td>
+            </tr>
+          </template>
+        </table>
+
+
+
+      <!-- <dl id="myWebSet" class="myWebSet">
         <template v-for="(myWebSetItem, n) in myWebSet">
           <dt
             :key="n"
@@ -91,7 +173,7 @@
             </p>
           </dd>
         </template>
-      </dl>
+      </dl> -->
     </div>
     <!-- 授权 -->
     <div v-show="backList.show==1" class="info-box">
@@ -133,11 +215,11 @@
       <table v-show="authorizeListShow" class="list-table">
         <tr>
           <th>No.</th>
-          <th>账号</th>
-          <th>W/B</th>
-          <th>最后登录</th>
-          <th>授权时间</th>
-          <th>IP</th>
+          <th @click="fn_sort_by('authorizeList','userName')">账号</th>
+          <th @click="fn_sort_by('authorizeList','wbStatus')">W/B</th>
+          <th @click="fn_sort_by('authorizeList','loginTime')">最后登录</th>
+          <th @click="fn_sort_by('authorizeList','updateTime')">授权时间</th>
+          <th @click="fn_sort_by('authorizeList','updateIP')">IP</th>
           
         </tr>
         <tr></tr>
@@ -187,14 +269,14 @@
         <table class="list-table">
           <tr>
             <th>No.</th>
-            <th>账号</th>
-            <th>注册时间</th>
-            <th>IP</th>
-            <th>分享</th>
-            <th>层级</th>
-            <th>代理</th>
-            <th>状态</th>
-            <th>最后登录</th>
+            <th @click="fn_sort_by('userList','userName')">账号</th>
+            <th @click="fn_sort_by('userList','registerTime')">注册时间</th>
+            <th @click="fn_sort_by('userList','registerIP')">IP</th>
+            <th >分享</th>
+            <th @click="fn_sort_by('userList','userLevel')">层级</th>
+            <th @click="fn_sort_by('userList','nextCount')">代理</th>
+            <th @click="fn_sort_by('userList','userActive')">状态</th>
+            <th @click="fn_sort_by('userList','loginTime')">最后登录</th>
           </tr>
           <template v-for="(user, n) in userList">
             <tr :key="n">
@@ -248,9 +330,7 @@
     </div>
     <div class="clearfloat"></div>
     <!-- 创建晋升 -->
-    <div
-      v-show="backList.show==3"
-      class="info-box"
+    <div v-show="backList.show==3" class="info-box"
       v-if="myLimit.create_user_3!=='0'||myLimit.create_user_2!=='0'||myLimit.create_user_1!=='0'">
       <p v-show="myLimit['create_user_'+addUserLevel]=='1'">
         将会员/代理归属到
@@ -348,7 +428,40 @@
       <p class="tips">
         <span>注</span> 修改初始化账号（如admin,zdadmin,cdadmin)将修改所有同层级的代理;0否1可2需申请
       </p>
-      <dl>
+
+
+
+<table class="list-table">
+          <tr>
+            <th>No.</th>
+            <th @click="fn_sort_by('adminLimit','userName')">站长(代理)账号</th>
+            <th @click="fn_sort_by('adminLimit','userID')">代理ID</th>
+          </tr>
+          <template v-for="(adminLimitItem, n) in adminLimit">
+            <tr :key="n"  @click="adminLimitShow=adminLimitShow==n?-1:n" class="underline">
+              <td>{{n+1}}</td>
+              <td>{{adminLimitItem['userName']}}</td>
+              <td>{{adminLimitItem['userID']}}</td>
+            </tr>
+            <tr v-show="adminLimitShow==n" :key="n+'_'+index" v-for="(value, key, index) in adminLimitItem">
+              <td colspan="3">
+            <p id="v-for-object" class="demo">
+              <span>{{ index }}. {{ $chinese.adminLimit[key] }}</span>
+              ： {{ value }}
+              <a
+                class="btn shareRequired short"
+                @click="fn_new('adminLimit|'+key+'|'+adminLimitItem['userID'])"
+              >修改</a>
+            </p>
+              </td>
+            </tr>
+          </template>
+        </table>
+
+
+
+
+      <!-- <dl>
         <template v-for="(adminLimitItem, n) in adminLimit">
           <dt
             :key="n"
@@ -369,7 +482,7 @@
             </p>
           </dd>
         </template>
-      </dl>
+      </dl> -->
     </div>
     <!-- 获取申请信息，以便审核，仅管理员 -->
     <div v-show="backList.show==6" v-if="userInfo.agentAdmin=='0'" class="info-box">
@@ -379,7 +492,7 @@
       </div>
 
       <div v-show="logSubmitListShow" class="info-box">
-        <table class="list-table">
+        <table class="list-table list-table-line">
           <tr>
             <th>No.</th>
             <th>申请人</th>
@@ -553,6 +666,13 @@ export default {
     ToggleSwitch
   },
   methods: {
+    fn_sort_by(JsonName,str){
+      if(!str)return;
+      let __json=this[JsonName];
+      sessionStorage.markxxx=sessionStorage.markxxx?(Number(sessionStorage.markxxx) *-1):1
+      let t=Number(sessionStorage.markxxx);
+      this.$$.sortBy(__json,str,t);
+    },
     fn_cs_fj(v, k) {
       this.temps.str = v;
       const arr = v.split("||");
@@ -1689,9 +1809,9 @@ if(mark=="delete"){
 }
 p {
   font-size: 12 / @rem;
-  padding-top: 0.125rem;
+  padding-top: 0.025rem;
   text-align: left;
-  margin-top: 8 / @rem;
+  margin-top: 2 / @rem;
 }
 p span {
   font-size: 12 / @rem;
@@ -1764,10 +1884,17 @@ ul {
 }
 .list-table {
   table-layout: fixed;
+width: 100%;
+
 }
-table.list-table td {
-  word-break: keep-all;
-  white-space: nowrap;
+
+table.list-table *{
+  word-break:break-all;
+  max-width: 100%;
+  font-size: 12px;
+}
+table.list-table td p{
+  font-size: 12 px;
 }
 dt {
   font-size: 10 / @rem;

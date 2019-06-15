@@ -24,19 +24,6 @@ Vue.mixin({
   }
 })
 
-
-// Vue.prototype.$loadMark = {
-//   count: 0,
-//   get(){
-//     return this.count;
-//   },
-//   add() {
-//     this.count++;
-//   },
-//   minus() {
-//     this.count--;
-//   }
-// };
 let pending = []; //声明一个数组用于存储每个ajax请求的取消函数和ajax标识
 let cancelToken = axios.CancelToken;
 let norepeatLinks = ['getWinRates.php'];
@@ -44,8 +31,8 @@ let noLoadingLinks = ['getFileName.php?di', 'mySql.txt'];
 let removePending = (config) => {
   const __url = config.url;
   for (let p in pending) {
-    if(pending[p].u === __url + '&' + config.method) { //当当前请求在数组中存在时执行函数体
-      pending[p].f('执行取消操作'+__url); //执行取消操作
+    if (pending[p].u === __url + '&' + config.method) { //当当前请求在数组中存在时执行函数体
+      pending[p].f('执行取消操作' + __url); //执行取消操作
       pending.splice(p, 1); //把这条记录从数组中移
     }
   }
@@ -53,7 +40,7 @@ let removePending = (config) => {
 //添加请求拦截器
 Vue.prototype.$axios.interceptors.request.use(config => {//在一个ajax发送前执行操作 config.url  config.method
   const __url = config.url;
-  
+
   //检索取消令牌，并取消请求
   removePending(config);
 
@@ -61,7 +48,7 @@ Vue.prototype.$axios.interceptors.request.use(config => {//在一个ajax发送�
   norepeatLinks.forEach(norepeatLink => {
     if (__url.indexOf(norepeatLink) != -1) {
       config.cancelToken = new cancelToken((c) => {
-        pending.push({ u: __url + '&' + config.method, f:c});
+        pending.push({ u: __url + '&' + config.method, f: c });
       });
     }
   });
@@ -69,11 +56,11 @@ Vue.prototype.$axios.interceptors.request.use(config => {//在一个ajax发送�
 
 
   //检测是否需要添加loading动画   开始
-  let isLoading=true;
+  let isLoading = true;
   noLoadingLinks.forEach(noLoadingLink => {
-    if (__url.indexOf(noLoadingLink) !== -1) {isLoading=false;}
+    if (__url.indexOf(noLoadingLink) !== -1) { isLoading = false; }
   });
-  if(isLoading){globalData.$data.$loadMark++;}
+  if (isLoading) { globalData.$data.$loadMark++; }
   //检测是否需要添加loading动画   结束
 
 
@@ -89,21 +76,21 @@ Vue.prototype.$axios.interceptors.response.use(response => {  //在一个ajax响
   removePending(response.config);
 
   //检测是否无需添加loading动画   开始
-  let isLoading=true;
+  let isLoading = true;
   noLoadingLinks.forEach(noLoadingLink => {
-    if (__url.indexOf(noLoadingLink) !== -1) {isLoading=false;}
+    if (__url.indexOf(noLoadingLink) !== -1) { isLoading = false; }
   });
-  if(isLoading){globalData.$data.$loadMark--;}
+  if (isLoading) { globalData.$data.$loadMark--; }
   //检测是否无需添加loading动画   结束
 
   return response;
 }, error => {
 
-  if(Vue.prototype.$axios.isCancel(error)){
-      console.warn('isCancel->', error.message)
-      globalData.$data.$loadMark--;
-  }else{
-      console.log('error', error)
+  if (Vue.prototype.$axios.isCancel(error)) {
+    console.warn('isCancel->', error.message)
+    globalData.$data.$loadMark--;
+  } else {
+    console.log('error', error)
   }
 
   return Promise.reject(error);
@@ -178,26 +165,39 @@ Vue.prototype.$$ = {
       alert(tips);
     }
   },
-  isAPP(){
-    return navigator.userAgent.indexOf("Html5Plus")!=-1
+  isAPP() {
+    return navigator.userAgent.indexOf("Html5Plus") != -1
   },
-  self2Url(url){
+  self2Url(url) {
 
-      if(navigator.userAgent.indexOf("Html5Plus")!=-1 && plus){
-        plus.runtime.openURL(url);
-        }else{
-          location.href=url;
-        }
+    if (navigator.userAgent.indexOf("Html5Plus") != -1 && plus) {
+      plus.runtime.openURL(url);
+    } else {
+      location.href = url;
+    }
 
-    },
-    blank2Url(url){
-      if(navigator.userAgent.indexOf("Html5Plus")!=-1 && plus){
-        plus.runtime.openURL(url);
-        }else{
-          window.open(url);
-        }
- 
+  },
+  blank2Url(url) {
+    if (navigator.userAgent.indexOf("Html5Plus") != -1 && plus) {
+      plus.runtime.openURL(url);
+    } else {
+      window.open(url);
+    }
 
+
+  }, sortBy(__json, __str, sortMark) {
+    sortMark = -sortMark;
+    console.log("sortBy=" + __str);
+    __json.sort(function (a, b) {
+      var aa = a[__str] + '';
+      var bb = b[__str] + '';
+      var xxx = aa.localeCompare(bb);
+      if (parseFloat(bb) == bb && parseFloat(aa) == aa) {
+        xxx = aa - bb;
+      }
+      return sortMark * xxx;
+    });
+    return __json;
   }
 
 };
@@ -221,7 +221,7 @@ chinese['webSetting']['siteName'] = '计划官网名称'
 chinese['webSetting']['publicAuthorization'] = '全局授权(0都可见1需授权，先填写下一个ip数要求再开启)'
 chinese['webSetting']['shareRequiredIP'] = '分享IP数要求'
 chinese['webSetting']['shareRequiredUser'] = '分享注册数要求'
-chinese['webSetting']['shareLimiteTime'] = '分享授权持续的时间'	
+chinese['webSetting']['shareLimiteTime'] = '分享授权持续的时间'
 chinese['webSetting']['apiSelect'] = '默认显示的彩种'
 chinese['webSetting']['defaultPlanID'] = '默认显示当前胜率第几名计划'
 chinese['webSetting']['historyLimit'] = '显示近N期的胜率'
@@ -238,7 +238,7 @@ chinese['webSetting']['csQQ'] = '网站客服QQ（||分割多个，随机展示�
 chinese['webSetting']['csQQGroup'] = '网站客服QQ群（||分割多个，随机展示）'
 chinese['webSetting']['csWechat'] = '网站客服微信（||分割多个，随机展示）'
 chinese['webSetting']['csEmail'] = '网站客服邮箱（||分割多个，随机展示）'
-chinese['webSetting']['ezunLink'] = 'ezun官网注册链接'
+chinese['webSetting']['ezunLink'] = 'BC官网注册链接'
 chinese['webSetting']['autoEzunLink'] = '开启自动修改注册链接'
 chinese['webSetting']['hk49plan1'] = '六合彩计划-标题'
 chinese['webSetting']['hk49plan2'] = '六合彩计划-精品推荐'
@@ -324,8 +324,8 @@ chinese['adminLimit']['webSetting_csQQ'] = '可否修改本站客服QQ'
 chinese['adminLimit']['webSetting_csQQGroup'] = '可否修改本站客服QQ群'
 chinese['adminLimit']['webSetting_csWechat'] = '可否修改本站客服微信'
 chinese['adminLimit']['webSetting_csEmail'] = '可否修改本站客服邮箱'
-chinese['adminLimit']['webSetting_ezunLink'] = '可否提交ezun官网注册链接'
-chinese['adminLimit']['webSetting_autoEzunLink'] = '可否自动通过提交ezun官网注册链接'
+chinese['adminLimit']['webSetting_ezunLink'] = '可否提交BC官网注册链接'
+chinese['adminLimit']['webSetting_autoEzunLink'] = '可否自动通过提交BC官网注册链接'
 chinese['adminLimit']['webSetting_hk49plan1'] = '可否修改六合彩计划'
 chinese['adminLimit']['webSetting_hk49plan2'] = '可否修改六合彩计划'
 chinese['adminLimit']['webSetting_hk49plan3'] = '可否修改六合彩计划'
@@ -403,11 +403,11 @@ chinese['api']['delayPeriod'] = '封盘时间'
 chinese['api']['defaultPlanQi'] = '默认几期'
 chinese['api']['defaultPlanPosition'] = '默认玩法'
 chinese['api']['defaultNumbers'] = '默认几码'
-chinese['api']['mark1'] = '备注1'
+chinese['api']['mark1'] = '排序（数字大在前）'
 chinese['api']['mark2'] = '备注2'
-chinese['api']['mark3'] = '备注1'
-chinese['api']['mark4'] = '备注1'
-chinese['api']['mark5'] = '备注1'
+chinese['api']['mark3'] = '备注3'
+chinese['api']['mark4'] = '备注4'
+chinese['api']['mark5'] = '备注5'
 chinese['shareIP'] = {}
 chinese['shareIP']['formName'] = '分享IP管理'
 chinese['shareIP']['id'] = '编码'
