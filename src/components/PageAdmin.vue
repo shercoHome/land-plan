@@ -37,7 +37,7 @@
             <th @click="fn_sort_by('myWebSet','userName')">站长(代理)账号</th>
             <th @click="fn_sort_by('myWebSet','userID')">代理ID</th>
             <th @click="fn_sort_by('myWebSet','siteLink')">专属网址</th>
-            <th @click="fn_sort_by('myWebSet','siteName')">网站名称</th>
+            <th @click="fn_sort_by('myWebSet','siteConfig')">网站名称</th>
             <th @click="fn_sort_by('myWebSet','id')">网站ID</th>
           </tr>
           <template v-for="(myWebSetItem, n) in myWebSet">
@@ -46,7 +46,7 @@
               <td>{{myWebSetItem['userName']}}</td>
               <td>{{myWebSetItem['userID']}}</td>
               <td>{{myWebSetItem['siteLink']}}</td>
-              <td>{{myWebSetItem['siteName']}}</td>
+              <td>{{myWebSetItem['siteConfig']}}</td>
               <td>{{myWebSetItem['id']}}</td>
             </tr>
             <tr v-show="webSetShow==n" :key="n+'_'+index" v-for="(value, key, index) in myWebSetItem">

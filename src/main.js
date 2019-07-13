@@ -198,6 +198,15 @@ Vue.prototype.$$ = {
       return sortMark * xxx;
     });
     return __json;
+  }, arrayIsSame(__arr) {
+    let l = __arr.length;
+    for (let i = 1; i < l; i++) {
+      if (__arr[i] !== __arr[0]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
 };
@@ -217,7 +226,7 @@ chinese['webSetting']['id'] = '编码'
 chinese['webSetting']['userID'] = '代理标识'
 chinese['webSetting']['userName'] = '代理账号'
 chinese['webSetting']['siteLink'] = '计划官网链接'
-chinese['webSetting']['siteName'] = '计划官网名称'
+chinese['webSetting']['siteConfig'] = '计划官网基本设置'
 chinese['webSetting']['publicAuthorization'] = '全局授权(0都可见1需授权，先填写下一个ip数要求再开启)'
 chinese['webSetting']['shareRequiredIP'] = '分享IP数要求'
 chinese['webSetting']['shareRequiredUser'] = '分享注册数要求'
@@ -248,7 +257,7 @@ chinese['webSetting']['hk49plan5'] = '六合彩计划-特别投注'
 chinese['webSetting']['hk49PlanPoet'] = '六合打油诗'
 chinese['webSetting']['hk49PlanPicture'] = '六合图'
 chinese['webSetting']['outLinkName'] = '一个外链名称'
-chinese['webSetting']['outLinkUrl'] = '一个外链地址'
+chinese['webSetting']['bulletinShow'] = '是否开启首页公告'
 chinese['webSetting']['baiduStatistics'] = '百度统计的代码'
 chinese['webSetting']['updateUserPsw'] = '会员可否修改自己的密码'
 chinese['webSetting']['submitUpdateUserLevel'] = '会员可否提交次级代理申请'
@@ -303,7 +312,7 @@ chinese['adminLimit']['id'] = '编码'
 chinese['adminLimit']['userID'] = '代理标识'
 chinese['adminLimit']['userName'] = '代理账号'
 chinese['adminLimit']['webSetting_siteLink'] = '可否修改本站的链接'
-chinese['adminLimit']['webSetting_siteName'] = '可否修改本站的名称'
+chinese['adminLimit']['webSetting_siteConfig'] = '可否修改本站的基本设置'
 chinese['adminLimit']['webSetting_publicAuthorization'] = '可否开关自己网站的授权'
 chinese['adminLimit']['webSetting_shareRequiredIP'] = '可否修改自己分享IP数要求'
 chinese['adminLimit']['webSetting_shareRequiredUser'] = '可否修改自己注册数要求'
@@ -334,7 +343,7 @@ chinese['adminLimit']['webSetting_hk49plan5'] = '可否修改六合彩计划'
 chinese['adminLimit']['webSetting_hk49PlanPoet'] = '可否修改打油诗'
 chinese['adminLimit']['webSetting_hk49PlanPicture'] = '可否上传六合彩图片'
 chinese['adminLimit']['webSetting_outLinkName'] = '可否修改外链名称（聊天室）'
-chinese['adminLimit']['webSetting_outLinkUrl'] = '可否修改外链(聊天室链接？)'
+chinese['adminLimit']['webSetting_bulletinShow'] = '可否开关首页公告弹窗'
 chinese['adminLimit']['webSetting_baiduStatistics'] = '可否修改百度统计的代码'
 chinese['adminLimit']['webSetting_updateUserPsw'] = '可否修改_会员可否修改自己的密码'
 chinese['adminLimit']['webSetting_submitUpdateUserLevel'] = '可否修改_会员可否提交次级代理申请'
@@ -404,7 +413,7 @@ chinese['api']['defaultPlanQi'] = '默认几期'
 chinese['api']['defaultPlanPosition'] = '默认玩法'
 chinese['api']['defaultNumbers'] = '默认几码'
 chinese['api']['mark1'] = '排序（数字大在前）'
-chinese['api']['mark2'] = '备注2'
+chinese['api']['mark2'] = '分类'
 chinese['api']['mark3'] = '备注3'
 chinese['api']['mark4'] = '备注4'
 chinese['api']['mark5'] = '备注5'
@@ -445,6 +454,29 @@ chinese['logSubmit']['submitTime'] = '提交时间'
 chinese['logSubmit']['doneTime'] = '操作时间'
 chinese['logSubmit']['result'] = '操作结果'
 Vue.prototype.$chinese = chinese;
+
+
+Date.prototype.format = function (fmt) {
+  var o = {
+    "M+": this.getMonth() + 1,                 //月份 
+    "d+": this.getDate(),                    //日 
+    "h+": this.getHours(),                   //小时 
+    "m+": this.getMinutes(),                 //分 
+    "s+": this.getSeconds(),                 //秒 
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+    "S": this.getMilliseconds()             //毫秒 
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    }
+  }
+  return fmt;
+}
+
 
 var dpr, rem;
 var docEl = document.documentElement;

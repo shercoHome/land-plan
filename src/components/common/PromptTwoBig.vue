@@ -1,26 +1,36 @@
 <template>
-  <div class="alert promptTwo">
+  <div class="alert PromptTwoBig">
     <div class="alert-content clearfloat">
             <span class="icon icon_close" @click="fn_close"></span>
       <h3 v-html="set.title"></h3>
-      <hr>
+
+            <hr>
+
+      <template  v-for="(inputItem,i) in set.input" >
+     
+      <label for="male" :key="'label'+i"><b :class="{active:inputItem.require=='1'}">* </b> {{inputItem.label}}</label>
       <input 
-         v-for="(inputItem,i) in set.input"
         :key="i"
         v-model="valueArr[i]" 
         :type="inputItem.type" 
+        :required="inputItem.require=='1'"
         :placeholder="inputItem.placeholder" 
       />
+      </template>
       <p v-html="set.tips"></p>
-      <a class="btn" style="background:red"  @click="fn_left">{{set.btn[0]}}</a>
+     
        <a class="btn" @click="fn_right" >{{set.btn[1]}}</a>
+
+
+        <a class="btnword"  @click="fn_left">已有账号，<span>{{set.btn[0]}}</span></a>
+
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PromptTwo",
+  name: "PromptTwoBig",
   data(){
     return{
       valueArr:[]
@@ -34,8 +44,8 @@ export default {
           title: "title",
           btn: ["btnleft", "btnright"],
           input: [
-            {placeholder:"input1placeholder",type:"text",require:'1'},
-            {placeholder:"input2placeholder",type:"password",require:'1'}
+            {placeholder:"input1placeholder",label:"labelName",type:"text",require:'1'},
+            {placeholder:"input2placeholder",label:"labelName",type:"password",require:'1'}
             ],
           tips: "" 
           }
@@ -78,7 +88,7 @@ export default {
        return isEmpty;
     },
     fn_close(){
-      this.$emit("child-event-fn-PromptTwo-hide");
+      this.$emit("child-event-fn-PromptTwoBig-hide");
     },
     fn_left(){
      this.$emit("child-event-fn-to-left",this.valueArr);
@@ -108,7 +118,7 @@ export default {
 
 .alert-content {
   position: relative;
-  width: 8rem;
+  width: 9rem;
 
   margin: 0 auto;
 
@@ -143,15 +153,15 @@ export default {
   /* 按钮美化 */
 
   display: block;
-  width: 40%; /* 宽度 */
+  width: 7rem; /* 宽度 */
   float: left;
   margin-left: 7%;
 
 
 
-  height: 2em; /* 高度 */
-  line-height: 2em;
-  margin-top: 0.125rem;
+  height: 1.8em; /* 高度 */
+  line-height: 1.8em;
+  margin-top: 0.5rem;
   border-width: 0px; /* 边框宽度 */
   border-radius: 3px; /* 边框半径 */
   background: #1e90ff; /* 背景颜色 */
@@ -159,26 +169,69 @@ export default {
   outline: none; /* 不显示轮廓线 */
   font-family: Microsoft YaHei; /* 设置字体 */
   color: white; /* 字体颜色 */
-  font-size:12/@rem; /* 字体大小 */
+  font-size:14/@rem; /* 字体大小 */
 }
 .btn:hover {
   /* 鼠标移入按钮范围时改变颜色 */
   background: #5599ff;
 }
-
+.btnword{
+    display: block;
+    width: 7rem;
+    float: left;
+    margin-left: 7%;
+    height: 1.5em;
+    line-height: 1.5em;
+    margin-top: 0.25rem;
+    border-width: 0px;
+    border-radius: 3px;
+ 
+    cursor: pointer;
+    outline: none;
+    font-family: Microsoft YaHei;
+    color: #8f8f94;
+    font-size: 12/@rem;
+}
+.btnword span{
+  color: #007aff;
+}
 p{
   margin: 4px 0;
 }
+label{
+  display: inline-block;
+    width:2rem;
+  height: 0.5rem;
+  
+  font-weight: bold;
+}
 input{
+    display: inline-block;
   max-width: 100%;
-  height: 1.5em;
+  width: 5rem;
+  height: 0.8rem;
   line-height: 1.5em;
   text-align: center;
-  margin-top: 16px;
+ margin-top: 0.5rem;
   padding: 4px 8px;
    border-radius: 3px; /* 边框半径 */
   border: 1px #777 solid;
+  box-sizing: border-box;
+  font-size: 12/@rem;
 
+}
+::placeholder {
+  color: #8f8f94;
+  font-size: 10/@rem;
+  text-align: left;
+}
+b{
+  visibility: hidden;
+
+}
+b.active{
+    visibility:visible;
+  color: red;
 }
 </style>
 

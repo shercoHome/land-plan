@@ -1,37 +1,64 @@
 <template>
   <div id="pageHK">
-   <marquee scrollamount="3" v-if="bulletin!='' &&bulletin!='isNull'">{{bulletin}}</marquee>
+    <marquee scrollamount="3" v-if="bulletin!='' &&bulletin!='isNull'">{{bulletin}}</marquee>
 
-<br><br>
+    <br>
+    <br>
 
-<h2>我们网站提供丰富多样的在线计划<br>如果网站的计划无法满足您的需求<br>那么请您联系下方的人工计划专员</h2>
-
+    <h2>
+      我们网站提供丰富多样的在线计划
+      <br>如果网站的计划无法满足您的需求
+      <br>那么请您联系下方的人工计划专员
+    </h2>
 
     <div v-if="txtData.qq.id!='isNull'">
-         <h3>QQ</h3>
-         <p>QQ号：{{txtData.qq.id}}<a @click="fn_copy(txtData.qq.id)">复制</a></p>
-         <p>二维码：<a @click="fn_qrcode('qq')">查看</a></p>
+      <h3>QQ</h3>
+      <p>
+        QQ号：{{txtData.qq.id}}
+        <a @click="fn_copy(txtData.qq.id)" :style="{background:webSet.siteConfig.backColor}">复制</a>
+      </p>
+      <p>
+        二维码：
+        <a @click="fn_qrcode('qq')" :style="{background:webSet.siteConfig.backColor}">查看</a>
+      </p>
     </div>
-<br>
-        <div v-if="txtData.wechat.id!='isNull'">
-         <h3>微信</h3>
+    <br>
+    <div v-if="txtData.wechat.id!='isNull'">
+      <h3>微信</h3>
 
-         <p>微信号：{{txtData.wechat.id}}<a @click="fn_copy(txtData.wechat.id)">复制</a></p>
-         <p>二维码：<a @click="fn_qrcode('wechat')">查看</a></p>
+      <p>
+        微信号：{{txtData.wechat.id}}
+        <a @click="fn_copy(txtData.wechat.id)" :style="{background:webSet.siteConfig.backColor}">复制</a>
+      </p>
+      <p>
+        二维码：
+        <a @click="fn_qrcode('wechat')" :style="{background:webSet.siteConfig.backColor}">查看</a>
+      </p>
     </div>
-<br>
-        <div v-if="txtData.mail!='isNull'">
-         <h3>邮箱</h3>
-         <p>邮箱号：{{txtData.mail}}<a @click="fn_copy(txtData.mail)">复制</a></p>
+    <br>
+    <div v-if="txtData.mail!='isNull'">
+      <h3>邮箱</h3>
+      <p>
+        邮箱号：{{txtData.mail}}
+        <a @click="fn_copy(txtData.mail)" :style="{background:webSet.siteConfig.backColor}">复制</a>
+      </p>
     </div>
-<br>
-        <div v-if="txtData.qqq.id!='isNull'">
-         <h3>QQ群</h3>
-                  <p>QQ群号：{{txtData.qqq.id}}<a @click="fn_copy(txtData.qqq.id)">复制</a></p>
-         <p>二维码：<a @click="fn_qrcode('qqq')">查看</a></p>
+    <br>
+    <div v-if="txtData.qqq.id!='isNull'">
+      <h3>QQ群</h3>
+      <p>
+        QQ群号：{{txtData.qqq.id}}
+        <a @click="fn_copy(txtData.qqq.id)" :style="{background:webSet.siteConfig.backColor}">复制</a>
+      </p>
+      <p>
+        二维码：
+        <a @click="fn_qrcode('qqq')" :style="{background:webSet.siteConfig.backColor}">查看</a>
+      </p>
     </div>
-
-
+ <br>
+        <h2>
+      如果您遇到其它任何问题，欢迎联系咨询
+    </h2>
   </div>
 </template>
 
@@ -40,7 +67,8 @@ export default {
   name: "PageUS",
   props: {
     txtData: Object,
-    bulletin:String
+    bulletin: String,
+    webSet:Object
   },
   created() {},
   methods: {
@@ -52,11 +80,9 @@ export default {
       console.log("home-fn_show_page:" + v);
       this.$emit("child-event-fn-show-page", v);
     },
-    fn_qrcode(v){
+    fn_qrcode(v) {
       this.$emit("child-event-fn-show-qrcode", v);
-      
     }
-    
   }
 };
 </script>
@@ -75,16 +101,15 @@ h3 {
 }
 h2 {
   color: red;
-  
 }
 h3 {
   font-size: 14 / @rem;
   font-weight: bold;
   margin: 6 / @rem 0;
-    border-bottom: 1 / @rem solid #999;
+  border-bottom: 1 / @rem solid #999;
 }
-ul{
-    margin-bottom:.5rem;
+ul {
+  margin-bottom: 0.5rem;
 }
 p,
 li {
@@ -108,7 +133,7 @@ a {
   margin: 6 / @rem;
 
   border-radius: 8 / @rem;
-  padding: 2/@rem 4/@rem;
+  padding: 2 / @rem 4 / @rem;
   font-weight: bold;
   background-color: #201617;
 }

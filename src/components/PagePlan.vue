@@ -1,10 +1,14 @@
 <template>
   <div id="PagePlan">
     <!-- 广告 -->
-    <a v-if="!forChat" @click="$$.blank2Url(c_data.affurl)">
-      <img alt="首存即送288" class="ad" src="ad01.jpg">
+    <a
+      v-if="!forChat && webSet.planTopImg.src!='isNull'"
+      @click="$$.blank2Url(webSet.planTopImg.url=='isNull'?c_data.affurl:webSet.planTopImg.url)"
+    >
+      <img alt="首存即送288" class="ad" :src="webSet.planTopImg.src" />
     </a>
-    <h1 class="title">
+
+    <h1 class="title" :style="{background:webSet.siteConfig.backColor}">
       <select v-model="apiSelect" class="select-api pointer">
         <template v-for="(d,i) in api">
           <option
@@ -15,42 +19,54 @@
           >{{d.lotteryname}}</option>
         </template>
       </select>
-      <span>{{c_data.name.substr(0,2)}}无神，跟反自由</span>
+      <span>{{webSet.siteConfig.planSlogan.substr(0,12)}}</span>
     </h1>
     <div class="clearfloat"></div>
     <p class="djs">
       <!-- <span>第{{ issue.period }}期开奖号码</span> -->
-      <span class="djs-span">第
-        <AnimatedInteger :value="issue.period"/>期开奖号码
+      <span class="djs-span">
+        第
+        <AnimatedInteger :value="issue.period" />期开奖号码
       </span>
-      
+
       <span class="djs-span">距离封盘：{{c_djs_time}}</span>
     </p>
     <!-- 今日开奖 -->
     <p>
       <template v-for="(d,i) in c_ar_new_kj[0]">
         <span v-show="i<c_api.code" class="code" :class="'code-'+(~~d)" :key="i">
-          <AnimatedInteger :value="d"/>
+          <AnimatedInteger :value="d" />
         </span>
       </template>
       <!-- PC蛋蛋，幸运28 -->
-      <template v-if="c_api.lotteryID=='xy28'">
+      <template v-if="c_api.mark2=='pcdd'">
         =
         <span class="code" :class="'code-'+(~~c_ar_new_kj[1][0])" :key="4">
-          <AnimatedInteger :value="c_ar_new_kj[1][0]"/>
+          <AnimatedInteger :value="c_ar_new_kj[1][0]" />
         </span>&emsp;
         <span class="code" :class="'code-0 code-color-'+c_ar_new_kj[1][1]" :key="5">
-          <AnimatedInteger :value="c_ar_new_kj[1][1]"/>
+          <AnimatedInteger :value="c_ar_new_kj[1][1]" />
         </span>
         <span class="code" :class="'code-0 code-color-'+c_ar_new_kj[1][2]" :key="6">
-          <AnimatedInteger :value="c_ar_new_kj[1][2]"/>
+          <AnimatedInteger :value="c_ar_new_kj[1][2]" />
         </span>
-        <span class="code" :class="'code-0 code-color-'+c_ar_new_kj[1][4]" :key="7">
-          <AnimatedInteger :value="c_ar_new_kj[1][4]"/>
+        <span
+          class="code"
+          :class="'code-0 code-color-'+c_ar_new_kj[1][4]"
+          :key="7"
+          v-if="c_ar_new_kj[1][4].indexOf('||')==-1"
+        >
+          <AnimatedInteger :value="c_ar_new_kj[1][4]" />
         </span>
+        <span
+          class="code"
+          :class="'code-0 code-length-3 code-color-'+c_ar_new_kj[1][4]"
+          :key="7"
+          v-else
+        >{{$$.arrayIsSame(c_ar_new_kj[1][4].split("||"))?"三同号":"三不同"}}</span>
       </template>
-      <!-- 分分时时彩 -->
-      <template v-else-if="c_api.lotteryID=='ffssc'">
+      <!-- 时时彩 -->
+      <template v-else-if="c_api.mark2=='ssc'">
         &emsp;后三
         <span v-show="c_ar_new_kj[5][2]!='err'" class="code code-length-2" :key="11">组三</span>
         <span v-show="c_ar_new_kj[6][2]!='err'" class="code code-length-2" :key="12">组六</span>
@@ -63,26 +79,19 @@
         @click="fn_to_plan_web()"
         class="fr pointer share"
       >计划官网</span>
-
-      <!-- <span
-        v-else-if="c_data.chaturl!=='null'"
-        @click="fn_chat()"
-        class="fr pointer share"
-      >{{c_data.chatname}}</span>-->
-      <!-- <span v-else @click="fn_share()" class="fr pointer share">分享</span> -->
       <a
         v-show="api[apiSelect].id!='bj'"
         @click="$$.blank2Url(c_data.affurl)"
         class="fr pointer share"
       >注册{{api[apiSelect].lotteryname}}</a>
-      
+
       <span @click="fn_copy_the_plan()" class="fr pointer copyPlan">复制当前计划</span>
     </p>
-    <div class="select">
+    <div class="select" :style="{background:webSet.siteConfig.backColor}">
       <!-- 玩法 -->
       <select v-model="plan.way" class="pointer">
         <template v-for="(d,i) in c_api_name">
-          <option class="positon" :class="{active:(i==plan.way)}" :value="i" :key="i">{{d.name}}</option>
+          <option class="positon" v-show="!fn_selectOpitionNoshow(i)" :class="{active:(i==plan.way)}" :value="i" :key="i">{{d.name}}</option>
         </template>
       </select>
       <span>&nbsp;</span>
@@ -181,11 +190,11 @@
 
     <!-- 广告 -->
     <a
-      v-if="!forChat"
-       @click="$$.blank2Url(c_data.affurl)"
+      v-if="!forChat && webSet.planBottomImg.src!='isNull'"
+      @click="$$.blank2Url(webSet.planBottomImg.url=='isNull'?c_data.affurl:webSet.planBottomImg.url)"
       style="border-top:#ccc 1px solid;margin-top:.5em;"
     >
-      <img alt="稳定平台推荐" class="ad" src="ad02.jpg">
+      <img alt="稳定平台推荐" class="ad" :src="webSet.planBottomImg.src" />
     </a>
 
     <!-- 历史 -->
@@ -259,7 +268,67 @@ export default {
           intervalPeriod: "60",
           link: "http://154.92.177.252/api/",
           lotteryID: "js",
-          lotteryname: "LT极速PK10",
+          lotteryname: "暂无可用彩种",
+          maxPeriod: "1440",
+          strPlanName:
+            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
+          strPosition:
+            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
+          switch: "0",
+          mark2: "pcdd"
+        },
+        {
+          code: "10",
+          defaultNumbers: "1",
+          defaultPlanPosition: "0",
+          defaultPlanQi: "2",
+          delayPeriod: "10",
+          dir: "pk10-js",
+          id: "1",
+          intervalPeriod: "60",
+          link: "http://154.92.177.252/api/",
+          lotteryID: "js",
+          lotteryname: "暂无可用彩种",
+          maxPeriod: "1440",
+          strPlanName:
+            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
+          strPosition:
+            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
+          switch: "0",
+          mark2: "ssc"
+        },
+        {
+          code: "10",
+          defaultNumbers: "1",
+          defaultPlanPosition: "0",
+          defaultPlanQi: "2",
+          delayPeriod: "10",
+          dir: "pk10-js",
+          id: "1",
+          intervalPeriod: "60",
+          link: "http://154.92.177.252/api/",
+          lotteryID: "js",
+          lotteryname: "暂无可用彩种",
+          maxPeriod: "1440",
+          strPlanName:
+            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
+          strPosition:
+            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
+          switch: "0",
+          mark2: "pk10"
+        },
+        {
+          code: "10",
+          defaultNumbers: "1",
+          defaultPlanPosition: "0",
+          defaultPlanQi: "2",
+          delayPeriod: "10",
+          dir: "pk10-js",
+          id: "1",
+          intervalPeriod: "60",
+          link: "http://154.92.177.252/api/",
+          lotteryID: "js",
+          lotteryname: "暂无可用彩种",
           maxPeriod: "1440",
           strPlanName:
             "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
@@ -278,7 +347,7 @@ export default {
           intervalPeriod: "60",
           link: "http://154.92.177.252/api/",
           lotteryID: "js",
-          lotteryname: "LT极速PK10",
+          lotteryname: "暂无可用彩种",
           maxPeriod: "1440",
           strPlanName:
             "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
@@ -297,7 +366,7 @@ export default {
           intervalPeriod: "60",
           link: "http://154.92.177.252/api/",
           lotteryID: "js",
-          lotteryname: "LT极速PK10",
+          lotteryname: "暂无可用彩种",
           maxPeriod: "1440",
           strPlanName:
             "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
@@ -316,7 +385,7 @@ export default {
           intervalPeriod: "60",
           link: "http://154.92.177.252/api/",
           lotteryID: "js",
-          lotteryname: "LT极速PK10",
+          lotteryname: "暂无可用彩种",
           maxPeriod: "1440",
           strPlanName:
             "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
@@ -335,7 +404,45 @@ export default {
           intervalPeriod: "60",
           link: "http://154.92.177.252/api/",
           lotteryID: "js",
-          lotteryname: "LT极速PK10",
+          lotteryname: "暂无可用彩种",
+          maxPeriod: "1440",
+          strPlanName:
+            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
+          strPosition:
+            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
+          switch: "0"
+        },
+        {
+          code: "10",
+          defaultNumbers: "1",
+          defaultPlanPosition: "0",
+          defaultPlanQi: "2",
+          delayPeriod: "10",
+          dir: "pk10-js",
+          id: "1",
+          intervalPeriod: "60",
+          link: "http://154.92.177.252/api/",
+          lotteryID: "js",
+          lotteryname: "暂无可用彩种",
+          maxPeriod: "1440",
+          strPlanName:
+            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
+          strPosition:
+            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
+          switch: "0"
+        },
+        {
+          code: "10",
+          defaultNumbers: "1",
+          defaultPlanPosition: "0",
+          defaultPlanQi: "2",
+          delayPeriod: "10",
+          dir: "pk10-js",
+          id: "1",
+          intervalPeriod: "60",
+          link: "http://154.92.177.252/api/",
+          lotteryID: "js",
+          lotteryname: "暂无可用彩种",
           maxPeriod: "1440",
           strPlanName:
             "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
@@ -409,7 +516,7 @@ export default {
             {
               expect: "72xxxx",
               opencode:
-                "**,**,**,**,**,**,**,**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**",
+                "**,**,**|||**,**,**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**|||**,**,**",
               opentime: "****-**-** **:**:**",
               opentimestamp: 888888888
             }
@@ -422,17 +529,17 @@ export default {
           limit: this.webSet.historyLimit, //显示近N期的胜率
           data: [
             {
-              "period":2019000000,
-              "todayPeriod":"000",
-              "openCode":"-1",
-              "openCodeOne":"\u7b49",
-              "planOne":"0,0,0,0",
-              "result":"\u7b49",
-              "markMark":1,
-              "periods":"2019000000~2019000000",
-              "mark":0
-              }
-              ], //历史数据)
+              period: 2019000000,
+              todayPeriod: "000",
+              openCode: "-1",
+              openCodeOne: "\u7b49",
+              planOne: "0,0,0,0",
+              result: "\u7b49",
+              markMark: 1,
+              periods: "2019000000~2019000000",
+              mark: 0
+            }
+          ], //历史数据)
           winOrLoseRate: 0
         }
       },
@@ -445,6 +552,7 @@ export default {
         view_plan: true,
         view_winRate: false
       },
+      setTimeoutMark: null,
       userCenter: this.appUserCenter
     };
   },
@@ -554,7 +662,7 @@ export default {
     },
     c_url_day_dir() {
       return (
-        this.c_api.link +
+        this.c_my_api.plan +
         "getFileName.php?dir=" +
         this.c_api.dir +
         "/txt-kj/" +
@@ -563,7 +671,7 @@ export default {
     },
     c_url_kj() {
       return (
-        this.c_api.link +
+        this.c_my_api.plan +
         "getFile.php?f=" +
         this.c_api.dir +
         "/txt-kj/" +
@@ -581,16 +689,23 @@ export default {
       const h = this.issue.history.limit;
       const id = this.plan.id;
       const a = this.c_api.dir;
-      const token = this.userCenter.info.hasOwnProperty("loginToken")
-        ? this.userCenter.info.loginToken
+      //登出时，that.userCenter.info = null;
+      // const token = this.userCenter.info.hasOwnProperty("loginToken")
+      //   ? this.userCenter.info.loginToken
+      //   : this.$store.state.token;
+      const token = this.userCenter.info
+        ? this.userCenter.info.hasOwnProperty("loginToken")
+          ? this.userCenter.info.loginToken
+          : this.$store.state.token
         : this.$store.state.token;
       const uid = this.userCenter.info ? this.userCenter.info.id : "0";
       const whiteId = this.plan.whiteId;
-     console.error(this.userCenter.info);
-      this.$$.console.red("this.$store.token="+this.$store.state.token);
-      this.$$.console.red("token="+token);
+      this.$$.console.red("this.userCenter.info");
+      console.log(this.userCenter.info);
+      this.$$.console.red("this.$store.token=" + this.$store.state.token);
+      this.$$.console.red("token=" + token);
       return (
-        this.c_api.link +
+        this.c_my_api.plan +
         "getWinRates.php?id=" +
         id +
         "&y=" +
@@ -627,18 +742,36 @@ export default {
   created() {
     const that = this;
 
+    const searchJson = that.$$.getSearch();
+
+    let __plantype = that.webSet.plantype;
+
+    that.$$.console.red("plan page created: " + __plantype);
+
     that.fn_get_plan_api().then(function(e) {
       console.log(">>> fn_get_plan_api >>> " + e);
-      console.log(e);
-      const oldAPI=e.data.data;
-      let tempAPI=[];
+      console.log(e.data.data);
+      const oldAPI = e.data.data;
+      let tempAPI = [];
       oldAPI.forEach(element => {
-         if(element.switch=="1"){tempAPI.push(element);}
+        if (
+          element.switch == "1" &&
+          (element.mark2 == __plantype || __plantype == "all")
+        ) {
+          tempAPI.push(element);
+        }
       });
 
-      that.api =tempAPI;
+      that.api = tempAPI;
 
-      that.$$.sortBy(that.api,'mark1',1);
+      that.$$.console.red("that.api");
+      console.log(that.api);
+      console.log(that.apiSelect);
+      that.apiSelect =
+        that.apiSelect > that.api.length - 1 ? 0 : that.apiSelect;
+      console.log(that.apiSelect);
+
+      that.$$.sortBy(that.api, "mark1", 1);
 
       that.plan.planqi = that.api[that.apiSelect].defaultPlanQi;
       that.plan.positon = that.api[that.apiSelect].defaultPlanPosition;
@@ -680,7 +813,6 @@ export default {
         console.log(
           "change-->localStorage.apiSelect=" + localStorage.apiSelect
         );
-        //location.href = "/?plan";//this.c_data.chaturl
       }
     },
     "plan.id"(val, oldVal) {
@@ -690,40 +822,38 @@ export default {
       }
     },
     "plan.way"(val, oldVal) {
-            //玩法重置
-            const l_p=this.c_api_name[val].item.length;
-            if(this.plan.positon>=l_p){
-                if(this.c_api.defaultPlanPosition>=l_p){
-                this.plan.positon = 0;
-                }else{
-                      this.plan.positon =  this.c_api.defaultPlanPosition;
-                }
-            }
-             const l_n=this.c_api_name[val].item[this.plan.positon].item.length;
-            if(this.plan.numbers>=l_n){
-                if(this.c_api.defaultNumbers>=l_n){
-                this.plan.numbers = 0;
-                }else{
-                      this.plan.numbers =  this.c_api.defaultPlanPosition;
-                }
-            }
+      //玩法重置
+      const l_p = this.c_api_name[val].item.length;
+      if (this.plan.positon >= l_p) {
+        if (this.c_api.defaultPlanPosition >= l_p) {
+          this.plan.positon = 0;
+        } else {
+          this.plan.positon = this.c_api.defaultPlanPosition;
+        }
+      }
+      const l_n = this.c_api_name[val].item[this.plan.positon].item.length;
+      if (this.plan.numbers >= l_n) {
+        if (this.c_api.defaultNumbers >= l_n) {
+          this.plan.numbers = 0;
+        } else {
+          this.plan.numbers = this.c_api.defaultPlanPosition;
+        }
+      }
 
       this.fn_latest_results();
-
     },
     "plan.positon"(val, oldVal) {
-            //玩法重置
-            const l_n=this.c_api_name[this.plan.way].item[val].item.length;
-            if(this.plan.numbers>=l_n){
-                if(this.c_api.defaultNumbers>=l_n){
-                this.plan.numbers = 0;
-                }else{
-                      this.plan.numbers =  this.c_api.defaultPlanPosition;
-                }
-            }
+      //玩法重置
+      const l_n = this.c_api_name[this.plan.way].item[val].item.length;
+      if (this.plan.numbers >= l_n) {
+        if (this.c_api.defaultNumbers >= l_n) {
+          this.plan.numbers = 0;
+        } else {
+          this.plan.numbers = this.c_api.defaultPlanPosition;
+        }
+      }
 
       this.fn_latest_results();
-
     },
     "plan.numbers"(val, oldVal) {
       this.fn_latest_results();
@@ -733,6 +863,14 @@ export default {
     }
   },
   methods: {
+    fn_selectOpitionNoshow(i){
+      if(this.c_api_name[i].name=='定位胆'&&this.c_api.mark2=='pcdd'){
+        this.plan.way=this.plan.way==0?1:this.plan.way;
+        return true;
+      }else{
+        return false;
+      }
+    },
     fn_copy_the_plan() {
       let title = this.c_api.lotteryname;
       title = title.split("");
@@ -833,10 +971,6 @@ export default {
     fn_to_plan_web() {
       window.open(this.c_domain + "?plan");
     },
-    fn_chat() {
-      window.open(this.c_data.chaturl);
-    },
-
     fn_share() {
       console.log(this.userCenter.isLogin);
       if (this.userCenter.isLogin) {
@@ -851,6 +985,8 @@ export default {
     fn_inint_1() {
       if (localStorage.apiSelect) {
         this.apiSelect = localStorage.apiSelect;
+        this.apiSelect =
+          this.apiSelect > this.api.length - 1 ? 0 : this.apiSelect;
       }
       if (localStorage.historyplan) {
         this.plan.historyId.data = localStorage.historyplan.split(",");
@@ -1074,7 +1210,7 @@ export default {
         })
         .then(function() {
           if (callBack == "loop") {
-            setTimeout(function() {
+            that.setTimeoutMark = setTimeout(function() {
               that.fn_api_get_new_qi("loop");
             }, 1000);
           }
@@ -1215,6 +1351,11 @@ export default {
       var d = today.getDate();
       return "" + y + this.fn_add0(m) + this.fn_add0(d);
     }
+  },
+  beforeDestroy() {
+    const that = this;
+    clearTimeout(that.setTimeoutMark);
+    that.setTimeoutMark = null;
   }
 };
 </script>
@@ -1272,9 +1413,10 @@ h1.title {
 
 h1.title span {
   position: relative;
-  display: inline-block;
-  width: 6rem;
+  display: block;
+  max-width: 6rem;
   text-align: right;
+  float: right;
 }
 p {
   font-size: 16 / @rem;
@@ -1386,46 +1528,6 @@ span.n-qi {
 .code-0.code-color-绿 {
   background: #006633;
 }
-.code-1 {
-  background: #e6de00;
-}
-
-.code-2 {
-  background: #0092dd;
-}
-
-.code-3 {
-  background: #4b4b4b;
-}
-
-.code-4 {
-  background: #ff7600;
-}
-
-.code-5 {
-  background: #17e2e5;
-}
-
-.code-6 {
-  background: #5234ff;
-}
-
-.code-7 {
-  background: #bfbfbf;
-}
-
-.code-8 {
-  background: #ff2600;
-}
-
-.code-9 {
-  background: #780b00;
-}
-
-.code-10,
-.code-0 {
-  background: #07bf00;
-}
 
 select {
   outline: none;
@@ -1481,17 +1583,7 @@ select::-ms-expand {
   line-height: 20 / @rem;
   font-size: 12 / @rem;
 }
-.select-api {
-  max-width: 3.5rem;
-  border-radius: 4 / @rem;
-  padding: 0 4 / @rem;
-  background-color: #fff;
-  border: 0.03125rem solid #201617;
-  display: inline-block;
-  height: 20 / @rem;
-  line-height: 20 / @rem;
-  font-size: 12 / @rem;
-}
+
 .positon {
   display: inline-block;
   width: 1rem;
@@ -1577,7 +1669,7 @@ span.right {
   color: #ff2600;
   border-color: #ff2600;
 }
-.copyPlan{
+.copyPlan {
   color: #fff;
   border-color: #fff;
   background-color: #ff2600;
@@ -1614,7 +1706,7 @@ span.right {
   margin: 0 auto;
   height: 0.8rem;
 
-  background: url("../assets/icon.png") no-repeat;
+  background: url("/img/base/icon.png") no-repeat;
   background-position: -4rem -2.2rem;
   background-size: 7rem;
 }
@@ -1668,5 +1760,9 @@ span.right {
       box-sizing: border-box;
     }
   }
+}
+
+.ad {
+  width: 100%;
 }
 </style>

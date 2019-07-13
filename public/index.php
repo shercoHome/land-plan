@@ -12,7 +12,7 @@ class ip
     public function __construct()
     {
        // require 'sql.php';
-        $this->file =  'ipWhite.txt';//先读取文件
+        $this->file =  'txt/ipWhite.txt';//先读取文件
         $txtArray= file($this->file);
         foreach ($txtArray as $key => $value) {
             $txtArray[$key] = trim($value); //去掉用户内容后面的空格.

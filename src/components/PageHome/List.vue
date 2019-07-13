@@ -18,11 +18,10 @@ export default {
   },
   methods: {
         fn_show_page(v) {
-          if(v==0){
-            v="PageHK";
-          }else{
-            v="PagePlan";
-          }
+          if(v==0){v="PageHK"};
+          if(v==1){v="PagePlan|pk10"};
+          if(v==2){v="PagePlan|ssc"};
+          if(v==3){v="PagePlan|pcdd"};
       console.log("home-fn_show_page:" + v);
       this.$emit("child-event-fn-show-page", v);
     }

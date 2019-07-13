@@ -9,13 +9,16 @@
       <p>
         <span>账号类型</span>
         ：{{c_user_title}}{{userCenter.info.agentStatus==1?"代理":"会员"}}
-        <a
+
+<a  class="btn middle"   @click="fn_reSetPSW" >修改密码</a>
+        
+        <!-- <a
           v-if="userCenter.info.agentStatus==0 && webSet.submitUpdateUserLevel==1"
           class="btn middle"
-           @click="fn_show_page('PageAgent')"
-        >申请成为代理</a>
-        <a v-if="userCenter.info.agentStatus==2" class="btn middle bk-gray">代理审核中</a>
-        <a v-if="userCenter.info.agentStatus==1" class="btn middle" @click="fn_show_page('PageAdmin')">代理后台</a>
+           @click="fn_show_page('PageUS')"
+        >申请成为代理</a>-->
+        <!-- <a v-if="userCenter.info.agentStatus==2" class="btn middle bk-gray">代理审核中</a> -->
+        <!-- <a v-if="userCenter.info.agentStatus==1" class="btn middle" @click="$$.blank2Url('http://planconsole.top')">代理后台</a> -->
       </p>
       <p>
         <span>注册时间</span>
@@ -28,24 +31,43 @@
       <p>
         <span>我的QQ</span>
         ：{{userCenter.info.userQQ=='isNull'?'请完善':userCenter.info.userQQ}}
-        <a v-if="webSet.updateUserQQ==1" class="btn short bk-gray" @click="fn_update_contact_info('userQQ')">修改</a>
+        <a
+          v-if="webSet.updateUserQQ==1"
+          class="btn short bk-gray"
+          @click="fn_update_contact_info('userQQ')"
+        >修改</a>
       </p>
       <p>
         <span>我的微信</span>
         ：{{userCenter.info.userWechat=='isNull'?'请完善':userCenter.info.userWechat}}
-        <a v-if="webSet.updateUserWechat==1" class="btn short bk-gray" @click="fn_update_contact_info('userWechat')">修改</a>
+        <a
+          v-if="webSet.updateUserWechat==1"
+          class="btn short bk-gray"
+          @click="fn_update_contact_info('userWechat')"
+        >修改</a>
       </p>
       <p>
         <span>我的手机</span>
         ：{{userCenter.info.userPhone=='isNull'?'请完善':userCenter.info.userPhone}}
-        <a v-if="webSet.updateUserPhone==1" class="btn short bk-gray" @click="fn_update_contact_info('userPhone')">修改</a>
+        <a
+          v-if="webSet.updateUserPhone==1"
+          class="btn short bk-gray"
+          @click="fn_update_contact_info('userPhone')"
+        >修改</a>
       </p>
       <p>
         <span>我的邮箱</span>
         ：{{userCenter.info.userEmail=='isNull'?'请完善':userCenter.info.userEmail}}
-        <a v-if="webSet.updateUserEmail==1" class="btn short bk-gray" @click="fn_update_contact_info('userEmail')">修改</a>
+        <a
+          v-if="webSet.updateUserEmail==1"
+          class="btn short bk-gray"
+          @click="fn_update_contact_info('userEmail')"
+        >修改</a>
       </p>
-      <p v-show="userCenter.info.userQQ==''||userCenter.info.userQQ=='isNull'||userCenter.info.userWechat==''||userCenter.info.userWechat=='isNull'||userCenter.info.userPhone==''||userCenter.info.userPhone=='isNull'||userCenter.info.userEmail==''||userCenter.info.userEmail=='isNull'" style="color:red">完善资料即有机会免费获取【永久授权】</p>
+      <p
+        v-show="userCenter.info.userQQ==''||userCenter.info.userQQ=='isNull'||userCenter.info.userWechat==''||userCenter.info.userWechat=='isNull'||userCenter.info.userPhone==''||userCenter.info.userPhone=='isNull'||userCenter.info.userEmail==''||userCenter.info.userEmail=='isNull'"
+        style="color:red"
+      >完善资料即有机会免费获取【永久授权】</p>
       <p>
         <span>分享链接</span>
         ：{{userCenter.info.shareLink}}
@@ -72,7 +94,10 @@
       <p>
         <span>授权状态</span>
         ：{{userCenter.info.shareState}}
-        <small v-show="c_quickAuthorization" class="show-link">点击进入>></small>
+        <small
+          v-show="c_quickAuthorization"
+          class="show-link"
+        >点击进入>></small>
         <a v-show="c_quickAuthorization" class="btn quick-authorization" @click="fn_show_info">快速授权</a>
       </p>
       <p class="tips">已授权的会员，可以查看更精准的计划、获取更详细的内部资料、享受更贴心的全面服务</p>
@@ -116,11 +141,11 @@ export default {
     };
   },
   props: {
-    c_my_api:Object,
+    c_my_api: Object,
     appUserCenter: Object,
     c_data: Object,
     webSet: Object,
-    ToCopyPlan:Object
+    ToCopyPlan: Object
   },
   computed: {
     c_quickAuthorization() {
@@ -140,12 +165,11 @@ export default {
   created() {},
   methods: {
     fn_show_page(v) {
-      if(v=="PageAdmin"){
-      location.replace(this.$$.getDomain() + "?admin");
+      if (v == "PageAdmin") {
+        location.replace(this.$$.getDomain() + "?admin");
       }
 
       this.userCenter.__hide();
-
 
       this.$emit("child-event-fn-show-page", v);
     },
@@ -154,10 +178,7 @@ export default {
     },
     fn_copy_text() {
       this.ToCopyPlan.__show();
-      this.$emit(
-        "child-event-fn-copy-text",
-        this.userCenter.info.shareLink
-      );
+      this.$emit("child-event-fn-copy-text", this.userCenter.info.shareLink);
     },
     fn_logout() {
       this.$$.console.red("userCenter-->fn_logou");
@@ -170,42 +191,50 @@ export default {
     fn_alert(tips, title) {
       this.$emit("child-event-alert", tips, title);
     },
-    fn_promt_for_child(title, tips, fn_yes, key){
-      this.$emit("child-event-fn-promt",title, tips, fn_yes, key);
+    fn_reSetPSW(){
+      this.$emit("child-event-fn-reSetPSW");
     },
-    fn_update_contact_info(key){
-      const that=this;
-     
-
-      const _title=this.$chinese['user'][key]
-
-      that.fn_promt_for_child('请输入新的'+_title,'',function(k,v){
-                      that.$$.console.red(k+"="+v);
-
-                      if(!that.$pattJson[k].test(v) && !(k=="userWechat" && that.$pattJson["userPhone"].test(v))){
-                        that.fn_alert('输入不正确！');
-                        return
-                      }
-
-
-                      that
-                        .fn_async_update_contact_info(k,v)
-                        .then(function(re) {
-                          that.$$.console.black(
-                            "admin >>>>>>>>> fn_update_contact_info >>>>>>>>>>>> " + re.data.msg
-                          );
-                          console.log(re.data);
-                          if(re.data.code=="1"){
-                            that.userCenter.info[k]=v;
-                          }
-                          that.fn_alert(re.data.msg);
-                        });
-      },key);
+    fn_promt_for_child(title, tips, fn_yes, key) {
+      this.$emit("child-event-fn-promt", title, tips, fn_yes, key);
     },
-    async fn_async_update_contact_info(k,v) {
+    fn_update_contact_info(key) {
+      const that = this;
+
+      const _title = this.$chinese["user"][key];
+
+      that.fn_promt_for_child(
+        "请输入新的" + _title,
+        "",
+        function(k, v) {
+          that.$$.console.red(k + "=" + v);
+
+          if (
+            !that.$pattJson[k].test(v) &&
+            !(k == "userWechat" && that.$pattJson["userPhone"].test(v))
+          ) {
+            that.fn_alert("输入不正确！");
+            return;
+          }
+
+          that.fn_async_update_contact_info(k, v).then(function(re) {
+            that.$$.console.black(
+              "admin >>>>>>>>> fn_update_contact_info >>>>>>>>>>>> " +
+                re.data.msg
+            );
+            console.log(re.data);
+            if (re.data.code == "1") {
+              that.userCenter.info[k] = v;
+            }
+            that.fn_alert(re.data.msg);
+          });
+        },
+        key
+      );
+    },
+    async fn_async_update_contact_info(k, v) {
       const that = this;
       const data_ = that.$qs.stringify({
-        type: 'updateUser',
+        type: "updateUser",
         uid: that.userCenter.info.id,
         token: that.userCenter.info.loginToken,
         formKey: k,

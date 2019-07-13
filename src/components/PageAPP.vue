@@ -1,30 +1,43 @@
 <template>
   <div id="PageAPP">
-   <marquee scrollamount="3" v-if="bulletin!='' &&bulletin!='isNull'">{{bulletin}}</marquee>
+    <marquee scrollamount="3" v-if="bulletin!='' &&bulletin!='isNull'">{{bulletin}}</marquee>
 
-<br><br>
+    <br />
+    <br />
 
-<h2>下载APP，赚钱更容易</h2>
-<br>
+    <h2>下载APP，赚钱更容易</h2>
+    <br />
 
-<h3 class="tipsWord">{{tipsWord}}</h3>
-<br>
-<div class="imgbox"><img v-show="tipsShow" :src="tipSrc" alt="微信打开"/></div>
-<a v-if="!tipsShow" v-show=" down_can_clicke" @click="to_down" >点击这里下载</a>
-<a v-if="!tipsShow" v-show="! down_can_clicke">下载中...</a>
-<br>
-        
-<h3>苹果手机下载须知</h3>
-            <p>1、点击下载-安装-后，请按home键<span style="color:red;font-weight:bold">返回到桌面</span>查看下载安装进度</p>
+    <h3 class="tipsWord">{{tipsWord}}</h3>
+    <br />
+    <div class="imgbox">
+      <img v-show="tipsShow" :src="tipSrc" alt="微信打开" />
+    </div>
+    <a
+      v-if="!tipsShow"
+      v-show=" down_can_clicke"
+      @click="to_down"
+      :style="{background:webSet.siteConfig.backColor}"
+    >点击这里下载</a>
+    <a
+      v-if="!tipsShow"
+      v-show="! down_can_clicke"
+      :style="{background:webSet.siteConfig.backColor}"
+    >下载中...</a>
+    <br />
+    <h3>无法下载？</h3>
+    <p>
+      1、请联系本站客服索要<span style="color:red;font-weight:bold">app安装包</span>或<span style="color:red;font-weight:bold">最新下载链接</span>
+    </p>
+    <h3>苹果手机下载须知</h3>
+    <p>
+      1、点击下载-安装-后，请按home键
+      <span style="color:red;font-weight:bold">返回到桌面</span>查看下载安装进度
+    </p>
 
-            <p >2、安装完成后，打开会提示【未受信任的企业级开发者】，需要添加【信任】后，才可以打开APP</p>
-<h3>如何添加信任</h3>
-            <p >进入【设置】——【通用】——【描述文件与设备管理】，找到Shanghai..开头的一项，点击信任</p>
-  
-
-
-
-
+    <p>2、安装完成后，打开会提示【未受信任的企业级开发者】，需要添加【信任】后，才可以打开APP</p>
+    <h3>如何添加信任</h3>
+    <p>进入【设置】——【通用】——【描述文件与设备管理】，找到Shanghai..开头的一项，点击信任</p>
   </div>
 </template>
 
@@ -33,96 +46,95 @@ export default {
   name: "PageAPP",
   data() {
     return {
-      tipsShow:false,
+      tipsShow: false,
 
-     tipSrc:"/app/wx-ios.png",
-    isWeixin:false,
-    isQQ:false,
-    tipsWord:"",
-     down_can_clicke:true
-    }
+      tipSrc: "/app/wx-ios.png",
+      isWeixin: false,
+      isQQ: false,
+      tipsWord: "",
+      down_can_clicke: true
+    };
   },
   props: {
-
-    bulletin:String,
+    webSet: Object,
+    bulletin: String
   },
   computed: {
-    isAndroid(){
-         var u = navigator.userAgent;
-    return u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-    },    isiOS(){
-         var u = navigator.userAgent;
-    return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    isAndroid() {
+      var u = navigator.userAgent;
+      return u.indexOf("Android") > -1 || u.indexOf("Adr") > -1; //android终端
+    },
+    isiOS() {
+      var u = navigator.userAgent;
+      return !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
     }
   },
   created() {
-
-
     this.isWeixin = this.is_weixin();
     this.isQQ = this.is_QQInnerBro();
 
-    if(this.isWeixin || this.isQQ){
-       this.tipsShow=true;
-        if(this.isAndroid){
-          this.tipSrc="/app/wx-a.png";
-        }else if(this.isiOS){
-           this.tipSrc="/app/wx-ios.png";
-           }
-    }else{
-       this.tipsShow=false;
+    if (this.isWeixin || this.isQQ) {
+      this.tipsShow = true;
+      if (this.isAndroid) {
+        this.tipSrc = "/app/wx-a.png";
+      } else if (this.isiOS) {
+        this.tipSrc = "/app/wx-ios.png";
+      }
+    } else {
+      this.tipsShow = false;
     }
-
   },
   methods: {
-to_down(){
-  const that=this;
-         let appname=window.location.hostname.split(".");
-       appname=appname[appname.length-2];
-       console.log("appname="+appname);
-        if(this.isAndroid){
-          let url='/app/'+appname+'.apk';
-                document.location = url;
-            console.log("isAndroid url="+url);
+    to_down() {
+      const that = this;
+      let appname = window.location.hostname.split(".");
+      appname = appname[appname.length - 2];
+      console.log("appname=" + appname);
+      if (this.isAndroid) {
+        let url = "/app/" + appname + ".apk";
+        document.location = url;
+        console.log("isAndroid url=" + url);
 
-            that.down_can_clicke=false;
+        that.down_can_clicke = false;
 
-            setTimeout(() => {
-               that.down_can_clicke=true;
-            }, 5000);
+        setTimeout(() => {
+          that.down_can_clicke = true;
+        }, 5000);
+      } else if (this.isiOS) {
+        let url =
+          "itms-services:///?action=download-manifest&url=https://www.ezun99.com/download/app/pro-" +
+          appname +
+          ".plist";
 
-        
+        document.location = url;
+        console.log("isiOS url=" + url);
 
-        }else if(this.isiOS){
-           let url='itms-services:///?action=download-manifest&url=https://www.ezun99.com/download/app/pro-'+appname+'.plist';
-          
-  document.location = url;
-            console.log("isiOS url="+url);
-
-  that.down_can_clicke=false;
-              setTimeout(() => {
-               that.down_can_clicke=true;
-            }, 5000);
-            
-        }else {
-           console.log("请用安卓或者苹果设备打开！！");
-            this.tipsWord='请用安卓或者苹果设备打开！！';
-        }
-},
-    is_weixin() {// 判断是不是微信浏览器
-        var ua = navigator.userAgent.toLowerCase();
-        if (ua.match(/MicroMessenger/i) == "micromessenger") {
-            return true;
-        } else {
-            return false;
-        }
+        that.down_can_clicke = false;
+        setTimeout(() => {
+          that.down_can_clicke = true;
+        }, 5000);
+      } else {
+        console.log("请用安卓或者苹果设备打开！！");
+        this.tipsWord = "请用安卓或者苹果设备打开！！";
+      }
     },
-    is_QQInnerBro(){//判断是不是QQ浏览器
-        var ua = navigator.userAgent.toLowerCase();
-        if (ua.match(/qq\//i) == "qq/") {
-            return true;
-        } else {
-            return false;
-        }
+    is_weixin() {
+      // 判断是不是微信浏览器
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    is_QQInnerBro() {
+      //判断是不是QQ浏览器
+      var ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/qq\//i) == "qq/") {
+        return true;
+      } else {
+        return false;
+      }
     },
     fn_copy(v, t) {
       t = t || "复制成功";
@@ -132,11 +144,9 @@ to_down(){
       console.log("home-fn_show_page:" + v);
       this.$emit("child-event-fn-show-page", v);
     },
-    fn_qrcode(v){
+    fn_qrcode(v) {
       this.$emit("child-event-fn-show-qrcode", v);
-      
     }
-    
   }
 };
 </script>
@@ -149,8 +159,8 @@ to_down(){
 #PageAPP {
   padding: 0.25rem;
 }
-.imgbox{
-  background-color: rgba(0,0,0,0.6);
+.imgbox {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 h2,
 h3 {
@@ -158,16 +168,15 @@ h3 {
 }
 h2 {
   color: red;
-  
 }
 h3 {
   font-size: 14 / @rem;
   font-weight: bold;
   margin: 6 / @rem 0;
-    border-bottom: 1 / @rem solid #999;
+  border-bottom: 1 / @rem solid #999;
 }
-ul{
-    margin-bottom:.5rem;
+ul {
+  margin-bottom: 0.5rem;
 }
 p,
 li {
@@ -188,7 +197,6 @@ a {
   display: block;
   cursor: pointer;
   color: #fff;
-  
 
   border-radius: 8 / @rem;
 
@@ -199,7 +207,4 @@ a {
   height: 1rem;
   line-height: 1rem;
 }
-
-
-
 </style>

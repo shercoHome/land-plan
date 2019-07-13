@@ -1,15 +1,32 @@
  <template>
-  <footer>
+  <footer :style="{background:webSet.siteConfig.backColor}">
     <ul>
-      <li>
+      <!-- <li  v-if="webSet.mark5.length>20 && webSet.mark5.indexOf('isNull')==-1">
+        <a  @click="fn_show_page('PageAgent')">
+          <span class="icon icon_love"></span>
+          <span>优惠速递</span>
+        </a>
+      </li>
+     <li  v-else>
         <a  @click="fn_show_page('PageAgent')">
           <span class="icon icon_zc"></span>
           <span>代理申请</span>
         </a>
+      </li> -->
+
+
+      <li>
+        <a  @click="fn_show_page('PageAgent')">
+          <span class="icon icon_love"></span>
+          <span>优惠速递</span>
+        </a>
       </li>
+
+
+
       <!-- <li>
       <a
-        v-if="!userCenter.isLogin"
+        v-if="!userCenter.isLogin"   icon_love
         @click="fn_PromptTwo_login"
       ><span class="icon icon_zc"></span>
           <span>代理申请</span></a>
@@ -31,17 +48,11 @@
           <span>首页</span>
         </a>
       </li>
-      <li 
-      v-if="txtData.chaturl!=='isNull'">
-        <a :href="txtData.chaturl" target="_blank">
-          <span class="icon icon_qqq"></span>
-          <span>{{txtData.chatname}}</span>
-        </a>
-      </li>
-      <li v-else>
-        <a href="###" @click="fn_qrcode('qqq')">
-          <span class="icon icon_qqq"></span>
-          <span>加QQ群</span>
+
+      <li @click="fn_show_page('PageHistory')">
+        <a href="###">
+          <span class="icon icon_label"></span>
+          <span>开奖历史</span>
         </a>
       </li>
       <li>
@@ -51,7 +62,7 @@
     href="###" 
         @click="fn_PromptTwo_login"
      
-      >                  <span class="icon icon_love"></span>
+      >                  <span class="icon icon_set"></span>
           <span>登录计划</span></a>
 
 
@@ -79,6 +90,7 @@ export default {
   },
   props: {
     txtData: Object,
+    webSet:Object,
     homeBlink:Boolean,
     appUserCenter:Object
   },
@@ -119,7 +131,7 @@ footer {
   position: absolute;
   width: 100%;
   z-index: 999;
-  background-color: #201617;
+  // background-color: #201617;
   height: 1.5rem;
 }
 footer {

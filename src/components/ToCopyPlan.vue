@@ -6,9 +6,9 @@
        <p style="color:red">分享网址已复制成功，快发送给小伙伴吧</p>
        <p style="color:red">伙伴访问此网址，即可增加一次分享进度</p>
         <p>您还可以去计划页面【复制当前计划】</p>
-      <img :src="require('../assets/copy_demo_01.jpg')" />
+      <img src="img/base/copy_demo_01.jpg" />
       <p>粘贴效果如下：</p>
-      <img :src="require('../assets/copy_demo_02.jpg')" />
+      <img src="img/base/copy_demo_02.jpg" />
 
       <p>【计划网址】就是您的分享网址</p>
       

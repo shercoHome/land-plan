@@ -1,9 +1,11 @@
 <template>
   <div class="alert">
-    <div class="alert-content clearfloat">
+    <div class="alert-content clearfloat" :class="{big:big}">
+       <span v-show="closePosition=='top'" class="icon icon_close" @click="fn_hide"></span>
       <h3 v-html="title"></h3>
-      <p v-html="tips"></p>
-      <a class="btn" @click="fn_hide">确定</a>
+      <hr  v-show="big">
+      <p v-html="tips"  :class="{left:left}"></p>
+      <a v-show="closePosition!='top'" class="btn" @click="fn_hide">确定</a>
     </div>
   </div>
 </template>
@@ -13,16 +15,23 @@ export default {
   name: "Alert",
   props: {
     title: String,
-    tips: String
+    tips: String,
+    setClass: Object
   },
-  mounted() {
-
+  computed: {
+    big() {
+      return this.setClass.big;
+    },
+    left() {
+      return this.setClass.left;
+    },
+    closePosition() {
+      return this.setClass.closePosition;
+    }
   },
-  created() {
-
-  },
+  created() {},
   methods: {
-    fn_hide(){
+    fn_hide() {
       this.$emit("child-event-fn-alert-hide");
     }
   }
@@ -48,39 +57,46 @@ export default {
 
   margin: 0 auto;
 
-        top: 50%;
-        transform: translateY(-50%);
-        
+  top: 50%;
+  transform: translateY(-50%);
+
   background: #fff;
   text-align: center;
   padding: 0.5rem;
   box-sizing: border-box;
   border-radius: 4px;
 }
+.alert-content.big {
+  width: 8rem;
+}
+.alert-content .left {
+  text-align: left;
+}
 .alert-content img {
   width: 5rem;
   border: 1px #ddd solid;
   margin: 0 auto;
 }
+.alert-content h3 {
+    font-size: 0.425rem;
+}
 .alert-content p {
   font-size: 0.315rem;
+  line-height: 2em;
   padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
 }
-.icon_close{
+.icon_close {
   position: absolute;
   right: 0;
   top: 0;
 }
-
 
 .btn {
   /* 按钮美化 */
 
   display: block;
   width: 100%; /* 宽度 */
-
-
-
 
   height: 2em; /* 高度 */
   line-height: 2em;
@@ -99,14 +115,20 @@ export default {
   background: #5599ff;
 }
 
-p{
+p {
   margin: 8px 0;
 }
-input{
+input {
   max-width: 100%;
   height: 1.5em;
   line-height: 1.5em;
   text-align: center;
+}
+
+.icon_close{
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 </style>
 

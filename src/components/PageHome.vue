@@ -2,8 +2,8 @@
   <div id="page-home">
    <marquee scrollamount="3" v-if="bulletin!='' &&bulletin!='isNull'">{{bulletin}}</marquee>
     <List :listItem="list.cp" class="cp" @child-event-fn-show-page="fn_show_page"/>
-    <List :listItem="list.qp" class="qp" @click.native="fn_alert('qq')"/>
-    <List :listItem="list.zr" class="zr" @click.native="fn_alert('qq')"/>
+    <List :listItem="list.qp" class="qp" @child-event-fn-show-page="fn_alert('qq')"/>
+    <List :listItem="list.zr" class="zr" @child-event-fn-show-page="fn_alert('qq')"/>
   </div>
 </template>
 
