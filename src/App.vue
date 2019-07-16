@@ -23,6 +23,7 @@
             :appUserCenter="userCenter"
             :webSet="webSet"
             :c_my_api="c_my_api"
+            @child-event-alert="fn_alert"
             @child-event-fn-show-login="fn_PromptTwo_login"
             @child-event-end-apploading="fn_inint_end_loading"
             @child-event-fn-show-page="fn_show_page"

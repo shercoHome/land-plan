@@ -87,8 +87,7 @@ export default {
   methods: {
     to_down() {
       const that = this;
-      let appname = window.location.hostname.split(".");
-      appname = appname[appname.length - 2];
+      let appname = window.location.hostname.split(".").slice(-2).join(".");;
       console.log("appname=" + appname);
       if (this.isAndroid) {
         let url = "/app/" + appname + ".apk";
@@ -102,7 +101,7 @@ export default {
         }, 5000);
       } else if (this.isiOS) {
         let url =
-          "itms-services:///?action=download-manifest&url=https://www.ezun99.com/download/app/pro-" +
+          "itms-services:///?action=download-manifest&url=https://plan.dachengplan.com/app/pro-" +
           appname +
           ".plist";
 

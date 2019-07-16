@@ -68,8 +68,8 @@
       <!-- 时时彩 -->
       <template v-else-if="c_api.mark2=='ssc'">
         &emsp;后三
-        <span v-show="c_ar_new_kj[5][2]!='err'" class="code code-length-2" :key="11">组三</span>
-        <span v-show="c_ar_new_kj[6][2]!='err'" class="code code-length-2" :key="12">组六</span>
+        <span v-show="c_ar_new_kj[6][2]!='err'" class="code code-length-2" :key="11">组三</span>
+        <span v-show="c_ar_new_kj[7][2]!='err'" class="code code-length-2" :key="12">组六</span>
       </template>
     </p>
     <p class="today-qihao">
@@ -91,7 +91,13 @@
       <!-- 玩法 -->
       <select v-model="plan.way" class="pointer">
         <template v-for="(d,i) in c_api_name">
-          <option class="positon" v-show="!fn_selectOpitionNoshow(i)" :class="{active:(i==plan.way)}" :value="i" :key="i">{{d.name}}</option>
+          <option
+            class="positon"
+            v-show="!fn_selectOpitionNoshow(i)"
+            :class="{active:(i==plan.way)}"
+            :value="i"
+            :key="i"
+          >{{d.name}}</option>
         </template>
       </select>
       <span>&nbsp;</span>
@@ -216,14 +222,14 @@
       />
     </transition>
 
-    <transition name="fade">
+    <!-- <transition name="fade">
       <Alert
         v-if="alert.show"
         :title="alert.title"
         :tips="alert.tips"
         @child-event-fn-alert-hide="alert.__hide"
       />
-    </transition>
+    </transition>-->
 
     <!-- 登录，注册 -->
     <transition name="fade">
@@ -461,14 +467,14 @@ export default {
           that.prompt.show = false;
         }
       },
-      alert: {
-        show: false,
-        title: "title",
-        tips: "tips",
-        __hide: function() {
-          that.alert.show = false;
-        }
-      },
+      // alert: {
+      //   show: false,
+      //   title: "title",
+      //   tips: "tips",
+      //   __hide: function() {
+      //     that.alert.show = false;
+      //   }
+      // },
       PromptTwo: {
         show: false,
         set: {
@@ -736,7 +742,7 @@ export default {
     HistoryPlanName,
     PromptTwo,
     Prompt,
-    Alert,
+    // Alert,
     vueSeamless
   },
   created() {
@@ -863,11 +869,11 @@ export default {
     }
   },
   methods: {
-    fn_selectOpitionNoshow(i){
-      if(this.c_api_name[i].name=='定位胆'&&this.c_api.mark2=='pcdd'){
-        this.plan.way=this.plan.way==0?1:this.plan.way;
+    fn_selectOpitionNoshow(i) {
+      if (this.c_api_name[i].name == "定位胆" && this.c_api.mark2 == "pcdd") {
+        this.plan.way = this.plan.way == 0 ? 1 : this.plan.way;
         return true;
-      }else{
+      } else {
         return false;
       }
     },
@@ -1172,7 +1178,9 @@ export default {
         .then(function(response) {
           const re = response.data;
           if (re == "0") {
-            that.fn_alert("还未开奖，切换到下一个彩种");
+            that.fn_alert(
+              that.c_api.lotteryname + " 还未开奖，切换到下一个彩种"
+            );
             that.apiSelect =
               that.apiSelect >= that.api.length - 1 ? 0 : that.apiSelect + 1;
             return;
@@ -1302,10 +1310,13 @@ export default {
         date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
       return Y + M + D + h + m + s;
     },
+    // fn_alert(tips, title) {
+    //   this.alert.show = true;
+    //   this.alert.title = title || "温馨提示";
+    //   this.alert.tips = tips;
+    // },
     fn_alert(tips, title) {
-      this.alert.show = true;
-      this.alert.title = title || "温馨提示";
-      this.alert.tips = tips;
+      this.$emit("child-event-alert", tips, title);
     },
     fn_prompt_authorize() {
       this.$emit("child-event-fn-prompt-show");
@@ -1329,26 +1340,41 @@ export default {
         alert(tips);
       }
     },
+    fn_get_real_day() {
+      let today = new Date();
+      let y = today.getFullYear();
+      let m = today.getMonth() + 1;
+      let d = today.getDate();
+      return y + "/" + this.fn_add0(m) + "/" + this.fn_add0(d);
+    },
     fn_get_day() {
-      var today = new Date();
-
-      var hour = today.getHours();
-      var minutes = today.getMinutes();
-
-      if (
-        this.c_api.lotteryID == "lucky-air-ship" &&
-        (hour < 4 || (hour == 4 && minutes < 9))
-      ) {
-        today = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+        /*
+        2019年7月15日 04:49:26  开奖时间从数据库获取，判断当前是否开奖，以读取今天或昨天的计划
+        */
+      let kjTime = "00:00:00";
+      if (this.c_api.mark3 != null) {
+        let timeArr = this.c_api.mark3.split("|");
+        kjTime = timeArr[0];
       }
 
-      if (this.c_api.lotteryID == "pc28" && hour == 0 && minutes < 5) {
-        today = new Date(today.getTime() - 24 * 60 * 60 * 1000);
-      }
+      let nowTime = new Date();
+      kjTime = new Date(this.fn_get_real_day() + " "+kjTime);
 
-      var y = today.getFullYear();
-      var m = today.getMonth() + 1;
-      var d = today.getDate();
+      console.log("nowTime=" + nowTime);
+      console.log("kjTime=" + kjTime);
+
+      //转换成毫秒进行比较
+      if (nowTime.getTime() > kjTime.getTime()) {
+        //已经超过开奖时间，读取今天的
+        console.log(this.c_api.lotteryname+" >>> 读取 今天");
+      } else {
+        //还没有到开奖时间，读取昨天的
+        this.$$.console.red(this.c_api.lotteryname+" >>> 读取 昨天");
+        nowTime = new Date(nowTime.getTime() - 24 * 60 * 60 * 1000);
+      }
+      var y = nowTime.getFullYear();
+      var m = nowTime.getMonth() + 1;
+      var d = nowTime.getDate();
       return "" + y + this.fn_add0(m) + this.fn_add0(d);
     }
   },

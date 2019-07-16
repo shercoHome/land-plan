@@ -16,7 +16,7 @@
       <span>时时彩</span>
     </a>
     <a href="###" class="btn min long20" @click="fn_show_page('PagePlan|pcdd')">
-      <span>PC蛋蛋</span>
+      <span>快3♛pc28</span>
     </a>
 
     <div class="select-box"  :style="{background:webSet.siteConfig.backColor}">
@@ -162,6 +162,7 @@ export default {
 
       that.apilink = that.c_my_api.plan + "getWinRates.php";
       that.lotterys = tempAPI;
+      that.$$.sortBy(that.lotterys, "mark1", 1);
     });
   },
   methods: {
