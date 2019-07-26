@@ -5,13 +5,18 @@
       <p>
         <span>注册账号</span>
         ：{{userCenter.info.userName}}
+        <a
+          class="btn middle letter"
+          @click="fn_alert_letter"
+        >消息<label :class="{ unRead: letter.unRead>0 }">({{letter.unRead}}/{{letter.count}})</label></a>
       </p>
       <p>
-        <span>账号类型</span>
-        ：{{c_user_title}}{{userCenter.info.agentStatus==1?"代理":"会员"}}
+        <span>账号类型</span>：{{c_user_title}}{{userCenter.info.agentStatus==1?"代理":"会员"}}
+        <a
+          class="btn middle"
+          @click="fn_reSetPSW"
+        >修改密码</a>
 
-<a  class="btn middle"   @click="fn_reSetPSW" >修改密码</a>
-        
         <!-- <a
           v-if="userCenter.info.agentStatus==0 && webSet.submitUpdateUserLevel==1"
           class="btn middle"
@@ -141,6 +146,7 @@ export default {
     };
   },
   props: {
+    letter:Object,
     c_my_api: Object,
     appUserCenter: Object,
     c_data: Object,
@@ -173,6 +179,9 @@ export default {
 
       this.$emit("child-event-fn-show-page", v);
     },
+    fn_alert_letter(){
+      this.$emit("child-event-alert-letter");
+    },
     fn_close() {
       this.$emit("child-event-fn-userCenter-hide");
     },
@@ -191,7 +200,7 @@ export default {
     fn_alert(tips, title) {
       this.$emit("child-event-alert", tips, title);
     },
-    fn_reSetPSW(){
+    fn_reSetPSW() {
       this.$emit("child-event-fn-reSetPSW");
     },
     fn_promt_for_child(title, tips, fn_yes, key) {
@@ -375,4 +384,6 @@ export default {
 .aff {
   background-color: #ff2600;
 }
+.letter label{padding-left: 0.25em;}
+.letter label.unRead{color: #ff7600;font-weight: bold;}
 </style>

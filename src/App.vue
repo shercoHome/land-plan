@@ -145,6 +145,7 @@
         :tips="alert.tips"
         :setClass="alert.setClass"
         @child-event-fn-alert-hide="alert.__hide"
+        @child-event-fn-read-letter="fn_read_letter"
       />
     </transition>
 
@@ -191,7 +192,9 @@
         :appUserCenter="userCenter"
         :c_data="c_data"
         :webSet="webSet"
+        :letter="letter"
         :ToCopyPlan="ToCopyPlan"
+        @child-event-alert-letter="fn_alert_letter"
         @child-event-alert="fn_alert"
         @child-event-fn-promt="fn_promt_for_child"
         @child-event-fn-reSetPSW="fn_PromptTwo_reSetPSW"
@@ -235,6 +238,39 @@ export default {
   data() {
     const that = this;
     return {
+      letter: {
+        count: 1,
+        unRead: 0,
+        data: [
+          {
+            id: "0",
+            title: "暂时没有消息",
+            content: "暂时没有消息",
+            createTime: "0000-00-00 00:00:00",
+            isRead: "1"
+          }
+        ]
+      },
+      confirmToLoginJson: {
+        //用于未登录的用户，弹出提示，fn_call_tips_to_login
+        myTimer: null, //定时器
+        closeBtnTime: 5,
+        showTipsTime: 5 * 60 * 1000,
+        title: "加入我们",
+        tips: "登录查看更精准计划！",
+        btnYES: "立即登录",
+        btnNO: "稍后再试"
+      },
+      confirmToReadLetterJson: {
+        //用于未登录的用户，弹出提示，fn_call_tips_to_login
+        myTimer: null, //定时器
+        closeBtnTime: 5,
+        showTipsTime: 5 * 60 * 1000,
+        title: "新消息",
+        tips: "您还有未读的消息哦",
+        btnYES: "立即查看",
+        btnNO: "稍后再看"
+      },
       forChat: false,
       adjustml: "-5rem",
       footHomeIsBlink: false,
@@ -299,7 +335,7 @@ export default {
         show: false,
         title: "title",
         tips: "tips",
-        setClass:{big:false,left:false,closePosition:"bottom"},
+        setClass: { big: false, left: false, closePosition: "bottom" },
         __hide: function() {
           that.alert.show = false;
         }
@@ -388,10 +424,34 @@ export default {
           that.userCenter["info"] = infoJson;
           that.userCenter["isLogin"] = true;
 
-          console.log(that.userCenter);
-
           if (typeof fnCallBack === "function") {
             fnCallBack("1");
+          }
+          console.log("that.userCenter:");
+          console.log(that.userCenter);
+
+          ///////////////////// 获取站内消息
+          that.fn_async_get_letter(that.userCenter.info.letter);
+
+          //设置定时提醒有新消息
+
+          if (
+            that.userCenter.isLogin &&
+            that.letter.unRead > 0 && 1
+           // that.confirmToReadLetterJson.showTipsTime > 0
+          ) {
+            that.$$.console.red("__in设置定时提醒有新消息confirmToLoginJson");
+            that.fn_JSON_CONFIG_TIMER(
+              that.confirmToReadLetterJson,
+              that.fn_alert_letter,
+              function() {
+                return (
+                  that.userCenter.isLogin &&
+                  that.letter.unRead > 0 &&
+                  that.confirmToReadLetterJson.showTipsTime > 0
+                );
+              }
+            );
           }
         },
         __out: function() {
@@ -399,6 +459,38 @@ export default {
           localStorage.removeItem("userInfo");
           that.userCenter.info = null;
           that.userCenter.isLogin = false;
+
+          // 设置定时提醒要登录
+          if (
+            !that.userCenter.isLogin &&
+            that.confirmToLoginJson.showTipsTime > 0
+          ) {
+            that.$$.console.red("_out设置定时提醒要登录confirmToLoginJson");
+            that.fn_JSON_CONFIG_TIMER(
+              that.confirmToLoginJson,
+              that.fn_PromptTwo_login,
+              function() {
+                return (
+                  !that.userCenter.isLogin &&
+                  that.confirmToLoginJson.showTipsTime > 0
+                );
+              }
+            );
+          }
+          //重置消息数据
+          that.letter = {
+            count: 1,
+            unRead: 0,
+            data: [
+              {
+                id: "0",
+                title: "暂时没有消息",
+                content: "暂时没有消息",
+                createTime: "0000-00-00 00:00:00",
+                isRead: "1"
+              }
+            ]
+          };
         },
         __reflash: function() {
           that.fn_prompt_login_reflash();
@@ -504,7 +596,13 @@ export default {
         mark2: "isNull",
         mark3: "",
         mark5: "",
-        siteConfig: {name:"加载中",slogan:"十二年行业领航精英团队",logo:"img/base/logo.png",backColor:"#201617",planSlogan:"计划无神，跟反自由"},
+        siteConfig: {
+          name: "加载中",
+          slogan: "十二年行业领航精英团队",
+          logo: "img/base/logo.png",
+          backColor: "#201617",
+          planSlogan: "计划无神，跟反自由"
+        },
         downLoadImg: { src: "isNull", url: "isNull" },
         plantype: "all"
       }
@@ -559,35 +657,66 @@ export default {
       that.fn_get_web_set().then(function(re) {
         console.log(">>> fn_get_web_set >>> " + re);
         console.log(re);
-        let tempConfig=that.webSet.siteConfig;
-        let strConfig=re.data.data.siteConfig;
-        let arrConfig=strConfig.split("||")[0].split("|");
-        tempConfig.name=arrConfig[0];
-        tempConfig.slogan=(arrConfig[1]!="isNull"&&arrConfig[1])?arrConfig[1]:tempConfig.slogan;
-        tempConfig.logo=(arrConfig[2]!="isNull"&&arrConfig[2])?arrConfig[2]:tempConfig.logo;
-        tempConfig.backColor=(arrConfig[3]!="isNull"&&arrConfig[3])?arrConfig[3]:tempConfig.backColor;
-        tempConfig.planSlogan=(arrConfig[4]!="isNull"&&arrConfig[4])?arrConfig[4]:tempConfig.planSlogan;
+        let tempConfig = that.webSet.siteConfig;
+        let strConfig = re.data.data.siteConfig;
+        let arrConfig = strConfig.split("||")[0].split("|");
+        tempConfig.name = arrConfig[0];
+        tempConfig.slogan =
+          arrConfig[1] != "isNull" && arrConfig[1]
+            ? arrConfig[1]
+            : tempConfig.slogan;
+        tempConfig.logo =
+          arrConfig[2] != "isNull" && arrConfig[2]
+            ? arrConfig[2]
+            : tempConfig.logo;
+        tempConfig.backColor =
+          arrConfig[3] != "isNull" && arrConfig[3]
+            ? arrConfig[3]
+            : tempConfig.backColor;
+        tempConfig.planSlogan =
+          arrConfig[4] != "isNull" && arrConfig[4]
+            ? arrConfig[4]
+            : tempConfig.planSlogan;
 
         that.webSet = re.data.data;
-        that.webSet.siteConfig=tempConfig;
+        that.webSet.siteConfig = tempConfig;
+
+        ///////开始///////////获取弹窗时间
+        if (
+          that.webSet.hasOwnProperty("outLinkName") &&
+          that.webSet.outLinkName != "isNull"
+        ) {
+          const ar = that.webSet.outLinkName.split("||")[0].split("|");
+          if (Number(ar[0]) == ar[0]) {
+            that.confirmToLoginJson.showTipsTime = Number(ar[0]) * 60 * 1000;
+          }
+          if (Number(ar[1]) == ar[1]) {
+            that.confirmToReadLetterJson.showTipsTime =
+              Number(ar[1]) * 60 * 1000;
+          }
+          console.log(that.confirmToLoginJson.showTipsTime);
+          console.log(that.confirmToReadLetterJson.showTipsTime);
+        }
+        console.log(that.confirmToLoginJson.showTipsTime);
+        console.log(that.confirmToReadLetterJson.showTipsTime);
+        ///////结束///////////获取弹窗时间
 
         //处理公告 开始
-        let strBulletin=that.webSet.mark1;
-        let arrBulletin=strBulletin.split("||");
-        let arrTempBulletin=[];
+        let strBulletin = that.webSet.mark1;
+        let arrBulletin = strBulletin.split("||");
+        let arrTempBulletin = [];
         arrBulletin.forEach(element => {
-          arrTempBulletin=arrTempBulletin.concat(element.split("|"))
+          arrTempBulletin = arrTempBulletin.concat(element.split("|"));
         });
-        let __arrTempBulletin=[];
-        arrTempBulletin.forEach((element,index) => {
-          __arrTempBulletin.push("★ "+(index+1)+". "+element);
+        let __arrTempBulletin = [];
+        arrTempBulletin.forEach((element, index) => {
+          __arrTempBulletin.push("★ " + (index + 1) + ". " + element);
         });
-        that.webSet.mark1=__arrTempBulletin.join(" ");
-        if(that.webSet.bulletinShow=="1"){
+        that.webSet.mark1 = __arrTempBulletin.join(" ");
+        if (that.webSet.bulletinShow == "1") {
           that.fn_alert_bulletin(__arrTempBulletin.join("<br>"));
         }
         //处理公告 结束
-        
 
         that.$store.actionStateSet("token", that.webSet.token);
         that.$chinese.user["userTitle"] =
@@ -646,7 +775,7 @@ export default {
           wechat: that.fn_splitStrCS(that.webSet.csWechat),
           mail: that.webSet.csEmail.split("||"),
           affurl: that.webSet.ezunLink,
-          chatname: that.webSet.outLinkName,
+          // chat/name: that.webSet.out/LinkName,
           baidu: that.webSet.baiduStatistics,
           name: that.webSet.siteConfig.name
         };
@@ -736,13 +865,81 @@ export default {
         wechat: this.fn_randomArray(this.txtData.wechat),
         mail: this.fn_randomArray(this.txtData.mail),
         affurl: this.txtData.affurl,
-        chatname: this.txtData.chatname,
+        // chat/name: this.txtData.cha/tname,
         baidu: this.txtData.baidu,
         name: this.txtData.name
       };
     }
   },
   methods: {
+    fn_async_do_read_letter(letterID) {
+      const that = this;
+      that.fn_do_read_letter(letterID).then(function(response) {
+        // handle success
+        const re = response.data;
+        if (re.code == "1") {
+          console.log("success-->fn_async_read_letter:" + letterID);
+        } else {
+          that.fn_alert(re.msg);
+        }
+      });
+    },
+    async fn_do_read_letter(letterID) {
+      const that = this;
+      const data_ = that.$qs.stringify({
+        type: "readLetter",
+        uid: that.userCenter.info.id,
+        token: that.userCenter.info.loginToken,
+        childID: letterID
+      });
+      try {
+        return await that.$axios.post(that.c_my_api.user, data_);
+      } catch (error) {
+        console.warn(error);
+      }
+    },
+    fn_async_get_letter(myLetter) {
+      const that = this;
+
+      if (myLetter) {
+        that.letter.count = myLetter.length;
+        if (that.letter.count > 0) that.letter.data = myLetter;
+        that.letter.unRead = 0;
+        that.letter.data.forEach((e, i) => {
+          if (e.isRead == "0") that.letter.unRead++;
+        });
+        return;
+      }
+      that.fn_get_letter().then(function(response) {
+        // handle success
+        console.log("success-->fn_get_letter:");
+        const re = response.data;
+
+        if (re.code == "1") {
+          that.letter.count = re.data.length;
+          if (that.letter.count > 0) that.letter.data = re.data;
+          that.letter.unRead = 0;
+          that.letter.data.forEach((e, i) => {
+            if (e.isRead == "0") that.letter.unRead++;
+          });
+        } else {
+          that.fn_alert(re.msg);
+        }
+      });
+    },
+    async fn_get_letter() {
+      const that = this;
+      const data_ = that.$qs.stringify({
+        type: "getLetter",
+        uid: that.userCenter.info.id,
+        token: that.userCenter.info.loginToken
+      });
+      try {
+        return await that.$axios.post(that.c_my_api.user, data_);
+      } catch (error) {
+        console.warn(error);
+      }
+    },
     fn_prompt_authorize(n) {
       const that = this;
       console.log(n);
@@ -980,7 +1177,7 @@ export default {
       ];
       if (that.webSet.registerPhone != "0") {
         inputSet.push({
-          placeholder: "请输入联系手机号",
+          placeholder: "输入手机号，用于找回密码",
           label: "手机",
           type: "text",
           require: that.webSet.registerPhone
@@ -988,7 +1185,7 @@ export default {
       }
       if (that.webSet.registerQQ != "0") {
         inputSet.push({
-          placeholder: "请输入联系QQ",
+          placeholder: "输入QQ号，用于人工计划",
           label: "QQ",
           type: "text",
           require: that.webSet.registerQQ
@@ -996,7 +1193,7 @@ export default {
       }
       if (that.webSet.registerWechat != "0") {
         inputSet.push({
-          placeholder: "请输入联系微信",
+          placeholder: "输入微信号，用于派发福利",
           label: "微信",
           type: "text",
           require: that.webSet.registerWechat
@@ -1004,7 +1201,7 @@ export default {
       }
       if (that.webSet.registerEmail != "0") {
         inputSet.push({
-          placeholder: "请输入联系邮箱",
+          placeholder: "输入邮箱，接收内部资讯",
           label: "邮箱",
           type: "text",
           require: that.webSet.registerEmail
@@ -1162,8 +1359,9 @@ export default {
             } else {
               //// token 失效，无法刷新获取登录的会员信息
               // localStorage.removeItem("userInfo");
+
               if (typeof fnCallBack === "function") {
-                fnCallBack("0");
+                fnCallBack("0"); //to log out
               } else {
                 that.fn_PromptTwo_login();
               }
@@ -1171,9 +1369,84 @@ export default {
           });
       } else {
         that.$$.console.blue(">>>localStorage.userInfo >>>  no");
-        // that.fn_PromptTwo_login();
+
+        // 设置定时提醒要登录
+        if (
+          !that.userCenter.isLogin &&
+          that.confirmToLoginJson.showTipsTime > 0
+        ) {
+          that.$$.console.red("设置定时提醒要登录confirmToLoginJson");
+          that.fn_JSON_CONFIG_TIMER(
+            that.confirmToLoginJson,
+            that.fn_PromptTwo_login,
+            function() {
+              return (
+                !that.userCenter.isLogin &&
+                that.confirmToLoginJson.showTipsTime > 0
+              );
+            }
+          );
+        }
+
+        // that.fn_confirmToLoginJson_myTimer();
       }
     },
+    fn_JSON_CONFIG_TIMER(JSON_CONFIG, CALLBACK_YES, CALLBACK_CONTINUE) {
+      const that = this;
+      clearTimeout(JSON_CONFIG.myTimer);
+      JSON_CONFIG.myTimer = setTimeout(function() {
+        that.fn_CALL_TIPS(JSON_CONFIG, CALLBACK_YES, CALLBACK_CONTINUE);
+      }, JSON_CONFIG.showTipsTime);
+    },
+
+    fn_CALL_TIPS(JSON_CONFIG, CALLBACK_YES, CALLBACK_CONTINUE) {
+
+       if (!CALLBACK_CONTINUE()) {
+         return;
+       }
+      const that = this;
+      let time = JSON_CONFIG.closeBtnTime;
+      that.confirm.show = true;
+      that.confirm.title = JSON_CONFIG.title;
+      that.confirm.tips = JSON_CONFIG.tips;
+      that.confirm.btn1 = JSON_CONFIG.btnYES;
+      that.confirm.btn2 = JSON_CONFIG.btnNO + "(" + time + ")";
+      that.confirm.__yes = function() {
+        CALLBACK_YES();
+        that.confirm.show = false;
+      };
+      ///// 设置关闭按钮不可用
+      that.confirm.__no = function() {
+        console.log("to  fn_CALL_TIPS no  waiting");
+      };
+
+      ///// 关闭按钮 倒计时
+      let confirmTimer = setInterval(function() {
+        console.log("fn_CALL_TIPS  confirmTimer = " + time);
+        that.confirm.btn2 = JSON_CONFIG.btnNO + "(" + time + ")";
+
+        ///// start ////////////倒计时结束，可关闭
+        if (time <= 0) {
+          that.confirm.btn2 = JSON_CONFIG.btnNO;
+          clearInterval(confirmTimer);
+          that.confirm.__no = function() {
+            console.log("to  child-event-fn-confirm-no");
+            that.confirm.show = false;
+
+            //关闭后，如果还是未登录状态，将在n秒后，再次弹窗提示
+            if (CALLBACK_CONTINUE()) {
+              clearTimeout(JSON_CONFIG.myTimer);
+              JSON_CONFIG.myTimer = setTimeout(function() {
+                that.fn_CALL_TIPS(JSON_CONFIG, CALLBACK_YES, CALLBACK_CONTINUE);;
+              }, JSON_CONFIG.showTipsTime);
+            }
+          };
+        }
+        ///// end ////////////倒计时结束，可关闭
+        time--;
+      }, 1000);
+    },
+
     fn_to_agent() {
       const that = this;
       console.log(that.userCenter);
@@ -1259,16 +1532,95 @@ export default {
       }
     },
     fn_alert(tips, title) {
-      this.alert.show = true;
-      this.alert.title = title || "温馨提示";
-      this.alert.tips = tips;
-      this.alert.setClass={big:false,left:false,closePosition:"bottom"};
+      const that = this;
+      that.alert.show = true;
+      that.alert.title = title || "温馨提示";
+      that.alert.tips = tips;
+      that.alert.setClass = {
+        big: false,
+        left: false,
+        closePosition: "bottom"
+      };
+      that.alert.__hide = function() {
+        that.alert.show = false;
+      };
     },
-    fn_alert_bulletin(tips, title) {
-      this.alert.show = true;
-      this.alert.title = title || "网站公告";
-      this.alert.tips = tips;
-      this.alert.setClass={big:true,left:true,closePosition:"top"};
+    fn_alert_bulletin(tips, title, CALLBACK_HIDE) {
+      const that = this;
+      that.alert.show = true;
+      that.alert.title = title || "网站公告";
+      that.alert.tips = tips;
+      that.alert.setClass = { big: true, left: true, closePosition: "top" };
+      that.alert.__hide =
+        CALLBACK_HIDE ||
+        function() {
+          that.alert.show = false;
+        };
+    },
+    fn_alert_letter() {
+      const that = this;
+      let __arrTempLetter = [];
+      that.letter.data.forEach((element, index) => {
+        let isRead = element.isRead == "1" ? "【已】" : "【未】";
+        let oneHTML =
+          "<b id='letter_" +
+          element.id +
+          "' class='letter_title'>" +
+          isRead +
+          " " +
+          (index + 1) +
+          ". " +
+          element.title +
+          "</b>";
+        oneHTML +=
+          "<lable id='letter_content_" +
+          element.id +
+          "' class='letter_content' style='display: none;'>" +
+          element.content +
+          "<br>" +
+          element.createTime +
+          "</lable>";
+
+        __arrTempLetter.push(oneHTML);
+      });
+      let letterHTML = __arrTempLetter.join("");
+      that.fn_alert_bulletin(letterHTML, "站内消息", function() {
+        if (
+          that.userCenter.isLogin &&
+          that.letter.unRead > 0 &&
+          that.confirmToReadLetterJson.showTipsTime > 0
+        ) {
+          that.$$.console.red(
+            "alert callback设置定时提醒有新消息confirmToLoginJson"
+          );
+          that.fn_JSON_CONFIG_TIMER(
+            that.confirmToReadLetterJson,
+            that.fn_alert_letter,
+            function() {
+              return (
+                that.userCenter.isLogin &&
+                that.letter.unRead > 0 &&
+                that.confirmToReadLetterJson.showTipsTime > 0
+              );
+            }
+          );
+        }
+
+        that.alert.show = false;
+      });
+    },
+    fn_read_letter(id) {
+      const that = this;
+      that.letter.data.forEach((element, index) => {
+        if (element.id == id && that.letter.data[index].isRead == "0") {
+          that.letter.data[index].isRead = "1";
+          that.letter.unRead--;
+
+          that.fn_async_do_read_letter(id);
+        }
+      });
+      console.log(that.letter);
+      //刷新界面
     },
     fn_qrcode(n) {
       this.qrcode.show = true;
@@ -1366,7 +1718,7 @@ export default {
             }
           ]
         };
-        if (__json.title == "" || __json.title.indexOf("isNull")!=-1) {
+        if (__json.title == "" || __json.title.indexOf("isNull") != -1) {
           return;
         }
         if (i == 0) {

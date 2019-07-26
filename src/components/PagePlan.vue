@@ -265,7 +265,7 @@ export default {
       api: [
         {
           code: "10",
-          defaultNumbers: "1",
+          defaultNumbers: "0",
           defaultPlanPosition: "0",
           defaultPlanQi: "2",
           delayPeriod: "10",
@@ -279,182 +279,9 @@ export default {
           strPlanName:
             "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
           strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
+            '[{"name":"定位胆","item":[{"name":"万","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"千","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"百","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"个","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]},{"name":"大小定位","item":[{"name":"万","item":[{"name":"一码","item":1}]},{"name":"千","item":[{"name":"一码","item":1}]},{"name":"百","item":[{"name":"一码","item":1}]},{"name":"十","item":[{"name":"一码","item":1}]},{"name":"个","item":[{"name":"一码","item":1}]}]},{"name":"单双定位","item":[{"name":"万","item":[{"name":"一码","item":1}]},{"name":"千","item":[{"name":"一码","item":1}]},{"name":"百","item":[{"name":"一码","item":1}]},{"name":"十","item":[{"name":"一码","item":1}]},{"name":"个","item":[{"name":"一码","item":1}]}]},{"name":"和值","item":[{"name":"大小","item":[{"name":"四码","item":4}]},{"name":"单双","item":[{"name":"一码","item":1}]},{"name":"大小单双","item":[{"name":"一码","item":1}]}]},{"name":"龙虎","item":[{"name":"万个","item":[{"name":"一码","item":1}]}]},{"name":"五星","item":[{"name":"定胆","item":[{"name":"一码","item":1}]}]},{"name":"组三","item":[{"name":"前三","item":[{"name":"七码","item":7},{"name":"八码","item":8},{"name":"九码","item":9}]},{"name":"中三","item":[{"name":"七码","item":7},{"name":"八码","item":8},{"name":"九码","item":9}]},{"name":"后三","item":[{"name":"七码","item":7},{"name":"八码","item":8},{"name":"九码","item":9}]}]},{"name":"组六","item":[{"name":"前三","item":[{"name":"六码","item":6},{"name":"七码","item":7},{"name":"八码","item":8},{"name":"九码","item":9}]},{"name":"中三","item":[{"name":"六码","item":6},{"name":"七码","item":7},{"name":"八码","item":8},{"name":"九码","item":9}]},{"name":"后三","item":[{"name":"六码","item":6},{"name":"七码","item":7},{"name":"八码","item":8},{"name":"九码","item":9}]}]}]',
           switch: "0",
           mark2: "pcdd"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0",
-          mark2: "ssc"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0",
-          mark2: "pk10"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
-        },
-        {
-          code: "10",
-          defaultNumbers: "1",
-          defaultPlanPosition: "0",
-          defaultPlanQi: "2",
-          delayPeriod: "10",
-          dir: "pk10-js",
-          id: "1",
-          intervalPeriod: "60",
-          link: "http://154.92.177.252/api/",
-          lotteryID: "js",
-          lotteryname: "暂无可用彩种",
-          maxPeriod: "1440",
-          strPlanName:
-            "百折不挠|金蝉脱壳|百里挑一|金玉满堂|壮志凌云|霸王别姬|天上人间|不吐不快|海阔天空|情非得已|满腹经纶|坚定不移|春暖花开|奋发图强|黄道吉日|天下无双|偷天换日|两小无猜|卧虎藏龙|珠光宝气|簪缨世族|花花公子|绘声绘影|国色天香|相亲相爱|八仙过海|金玉良缘|掌上明珠|皆大欢喜|生财有道|极乐世界|情不自禁|坚持不懈|魑魅魍魉|龙生九子|持之以恒|勇往直前|高山流水|卧薪尝胆|壮志凌云|金枝玉叶|四海一家|穿针引线|无忧无虑|坚毅顽强|三位一体|落叶归根|相见恨晚|惊天动地|滔滔不绝|相濡以沫|长生不死|原来如此|女娲补天|三皇五帝|斗志昂扬|水木清华|破釜沉舟|天涯海角|牛郎织女|倾国倾城|飘飘欲仙|福星高照|朝气蓬勃|永无止境|学富五车|饮食男女|英雄豪杰|国士无双|力争上游|万家灯火|石破天惊|精忠报国|养生之道|覆雨翻云|六道轮回|鹰击长空|日日夜夜|厚德载物|锲而不舍|万里长城|黄金时代|出生入死|一路顺风|随遇而安|千军万马|棋逢对手|叶公好龙|至死不懈|守株待兔|凤凰于飞|一生一世|花好月圆|世外桃源|韬光养晦|坚忍不拔|青梅竹马|风花雪月|英勇无畏|总而言之",
-          strPosition:
-            '[{"name":"定位胆","item":[{"name":"冠","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"亚","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"三","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"四","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"五","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"六","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"七","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"八","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"九","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]},{"name":"十","item":[{"name":"四码","item":4},{"name":"五码","item":5},{"name":"六码","item":6},{"name":"七码","item":7}]}]}]',
-          switch: "0"
         }
       ],
       apiSelect: this.webSet.apiSelect - 1,
@@ -829,6 +656,7 @@ export default {
     },
     "plan.way"(val, oldVal) {
       //玩法重置
+      console.warn("玩法重置：" + oldVal + "->" + val);
       const l_p = this.c_api_name[val].item.length;
       if (this.plan.positon >= l_p) {
         if (this.c_api.defaultPlanPosition >= l_p) {
@@ -837,31 +665,45 @@ export default {
           this.plan.positon = this.c_api.defaultPlanPosition;
         }
       }
+      console.warn("玩法重置:positon->" + this.plan.positon);
       const l_n = this.c_api_name[val].item[this.plan.positon].item.length;
       if (this.plan.numbers >= l_n) {
         if (this.c_api.defaultNumbers >= l_n) {
           this.plan.numbers = 0;
         } else {
-          this.plan.numbers = this.c_api.defaultPlanPosition;
+          this.plan.numbers = this.c_api.defaultNumbers;
         }
       }
-
+      console.warn("玩法重置:numbers->" + this.plan.numbers);
       this.fn_latest_results();
     },
     "plan.positon"(val, oldVal) {
-      //玩法重置
+      //位置重置
+      console.warn("位置重置：" + oldVal + "->" + val);
       const l_n = this.c_api_name[this.plan.way].item[val].item.length;
       if (this.plan.numbers >= l_n) {
         if (this.c_api.defaultNumbers >= l_n) {
           this.plan.numbers = 0;
         } else {
-          this.plan.numbers = this.c_api.defaultPlanPosition;
+          this.plan.numbers = this.c_api.defaultNumbers;
         }
       }
-
+      console.warn("位置重置:numbers->" + this.plan.numbers);
       this.fn_latest_results();
     },
     "plan.numbers"(val, oldVal) {
+      //码数重置
+      console.warn("码数重置：" + oldVal + "->" + val);
+      const l_n = this.c_api_name[this.plan.way].item[this.plan.positon].item.length;
+       console.warn("码数重置：总数=" + l_n+"，当前="+this.plan.numbers);
+      if (this.plan.numbers >= l_n) {
+        if (this.c_api.defaultNumbers >= l_n) {
+          this.plan.numbers = 0;
+        } else {
+          this.plan.numbers = this.c_api.defaultNumbers;
+        }
+      }
+       console.warn("码数重置（调整）：" + this.plan.numbers);
       this.fn_latest_results();
     },
     "plan.planqi"(val, oldVal) {
@@ -1181,8 +1023,7 @@ export default {
             that.fn_alert(
               that.c_api.lotteryname + " 还未开奖，切换到下一个彩种"
             );
-            that.apiSelect =
-              that.apiSelect >= that.api.length - 1 ? 0 : that.apiSelect + 1;
+          //  that.apiSelect =that.apiSelect >= that.api.length - 1 ? 0 : that.apiSelect + 1;
             return;
           }
 
@@ -1348,7 +1189,7 @@ export default {
       return y + "/" + this.fn_add0(m) + "/" + this.fn_add0(d);
     },
     fn_get_day() {
-        /*
+      /*
         2019年7月15日 04:49:26  开奖时间从数据库获取，判断当前是否开奖，以读取今天或昨天的计划
         */
       let kjTime = "00:00:00";
@@ -1358,7 +1199,7 @@ export default {
       }
 
       let nowTime = new Date();
-      kjTime = new Date(this.fn_get_real_day() + " "+kjTime);
+      kjTime = new Date(this.fn_get_real_day() + " " + kjTime);
 
       console.log("nowTime=" + nowTime);
       console.log("kjTime=" + kjTime);
@@ -1366,10 +1207,10 @@ export default {
       //转换成毫秒进行比较
       if (nowTime.getTime() > kjTime.getTime()) {
         //已经超过开奖时间，读取今天的
-        console.log(this.c_api.lotteryname+" >>> 读取 今天");
+        console.log(this.c_api.lotteryname + " >>> 读取 今天");
       } else {
         //还没有到开奖时间，读取昨天的
-        this.$$.console.red(this.c_api.lotteryname+" >>> 读取 昨天");
+        this.$$.console.red(this.c_api.lotteryname + " >>> 读取 昨天");
         nowTime = new Date(nowTime.getTime() - 24 * 60 * 60 * 1000);
       }
       var y = nowTime.getFullYear();

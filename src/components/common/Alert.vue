@@ -1,10 +1,10 @@
 <template>
-  <div class="alert">
+  <div class="alert_321591234">
     <div class="alert-content clearfloat" :class="{big:big}">
-       <span v-show="closePosition=='top'" class="icon icon_close" @click="fn_hide"></span>
+      <span v-show="closePosition=='top'" class="icon icon_close" @click="fn_hide"></span>
       <h3 v-html="title"></h3>
-      <hr  v-show="big">
-      <p v-html="tips"  :class="{left:left}"></p>
+      <hr v-show="big" />
+      <p v-html="tips" @click="cb" :class="{left:left}"></p>
       <a v-show="closePosition!='top'" class="btn" @click="fn_hide">确定</a>
     </div>
   </div>
@@ -33,14 +33,54 @@ export default {
   methods: {
     fn_hide() {
       this.$emit("child-event-fn-alert-hide");
+    },
+    cb(event) {
+      let el = event.target;
+      if (el.nodeName === "B") {
+        let thisID = el.id;
+        if (thisID.indexOf("letter_") == 0) {
+          el.innerHTML = el.innerHTML.replace("【未】", "【已】");
+
+          let letterID = thisID.slice(7);
+          console.log(letterID);
+
+          this.$emit("child-event-fn-read-letter", letterID);
+
+          let eles_letter_content = document.getElementsByClassName(
+            "letter_content"
+          );
+          for (let i = 0; i < eles_letter_content.length; i++) {
+            eles_letter_content[i].style = "display:none;";
+          }
+
+          document.getElementById("letter_content_" + letterID).style =
+            "display:block;";
+        }
+      }
+    },
+    fn_to_agent() {
+      // this.$emit("child-event-fn-to-agent");
+    },
+    fn_show_page(v) {
+      console.log("home-fn_show_page:" + v);
+      this.$emit("child-event-fn-show-page", v);
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
-.alert {
+<style lang="less">
+.alert_321591234 .letter_title {
+  display: block;
+  text-decoration: underline;
+}
+.alert_321591234 .letter_content {
+  color: #333;
+  border: 1px #777 solid;
+  padding: 0.5em;
+}
+.alert_321591234 {
   display: block;
   position: fixed;
   top: 0;
@@ -51,7 +91,7 @@ export default {
   background: rgba(0, 0, 0, 0.7);
 }
 
-.alert-content {
+.alert_321591234 .alert-content {
   position: relative;
   width: 6rem;
 
@@ -66,33 +106,33 @@ export default {
   box-sizing: border-box;
   border-radius: 4px;
 }
-.alert-content.big {
+.alert_321591234 .alert-content.big {
   width: 8rem;
 }
-.alert-content .left {
+.alert_321591234 .alert-content .left {
   text-align: left;
 }
-.alert-content img {
+.alert_321591234 .alert-content img {
   width: 5rem;
   border: 1px #ddd solid;
   margin: 0 auto;
 }
-.alert-content h3 {
-    font-size: 0.425rem;
+.alert_321591234 .alert-content h3 {
+  font-size: 0.425rem;
 }
-.alert-content p {
+.alert_321591234 .alert-content p {
   font-size: 0.315rem;
   line-height: 2em;
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
 }
-.icon_close {
+.alert_321591234 .icon_close {
   position: absolute;
   right: 0;
   top: 0;
 }
 
-.btn {
+.alert_321591234 .btn {
   /* 按钮美化 */
 
   display: block;
@@ -110,22 +150,22 @@ export default {
   color: white; /* 字体颜色 */
   font-size: 0.315rem; /* 字体大小 */
 }
-.btn:hover {
+.alert_321591234 .btn:hover {
   /* 鼠标移入按钮范围时改变颜色 */
   background: #5599ff;
 }
 
-p {
+.alert_321591234 p {
   margin: 8px 0;
 }
-input {
+.alert_321591234 input {
   max-width: 100%;
   height: 1.5em;
   line-height: 1.5em;
   text-align: center;
 }
 
-.icon_close{
+.alert_321591234 .icon_close {
   position: absolute;
   right: 0;
   top: 0;
