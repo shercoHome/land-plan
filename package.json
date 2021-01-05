@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@tweenjs/tween.js": "^17.3.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "vue": "^2.5.21",
     "vue-seamless-scroll": "^1.1.16"
   },
